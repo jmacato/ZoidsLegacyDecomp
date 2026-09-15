@@ -5,6 +5,8 @@ They cover all 1,205 inventoried callable owners and their 371,784 code bytes.
 The source includes C, inline assembly, assembler macros, and assembly files.
 It does not contain a ROM, game data, generated ROMs, saves, or binary probes.
 
+> HEAD'S UP: The decomped functions looks jank right now due to the use of both permutators, arument macros, and typical AI slop. I'll try to clean it up when i get more free time :P 
+
 ## Requirements
 
 Install Python 3, a C preprocessor, ARM binutils, and agbcc.
