@@ -1,0 +1,181 @@
+#include "m2c_prelude.h"
+extern void func_08095114(void *);
+extern void func_080D12A0(s32, s32);
+extern void *func_080D2450();
+extern void *func_080D2660();
+extern void func_080D2790(s32);
+extern u32 func_080ECD5C(u32);
+extern s32 func_080ECD98(s32, s32);
+extern u32 D_03000010;
+
+void sub_080D76B8(void *arg0) {
+    char *owner = arg0;
+    register s32 *p8C asm("r8") = (s32 *)(owner + 0x8C);
+    u32 state = *p8C;
+
+    switch (state) {
+    case 0:
+        {
+            register s32 *p90 asm("r4") = (s32 *)(owner + 0x90);
+            void *created;
+            register s32 x asm("r3");
+            register s32 *y_ptr asm("r0");
+            register s32 y asm("r0");
+
+            x = *p90;
+            x -= 0x100;
+            x = (s16)x;
+            y_ptr = (s32 *)(owner + 0x94);
+            y = *y_ptr;
+            y -= 0x80;
+            y = (s16)y;
+            created = func_080D2450(owner, 0, 0, x,
+                y, 0x20, 0x080D6E6D, 1);
+            *(void **)(owner + 0xC) = created;
+            *(void **)((char *)created + 0x28) = owner;
+            *(s32 *)((char *)created + 0x2C) = 0;
+            *(s32 *)((char *)created + 0x30) = *p90;
+            func_080D2790(0);
+            {
+                register s32 *slot asm("r2") = p8C;
+                *slot = *slot + 1;
+            }
+            return;
+        }
+        return;
+    case 1:
+        if ((*(s32 *)*(void **)(owner + 0xC) & 0x20000) != 0) {
+            register s32 spawn_x asm("r3");
+            register s16 *p90 asm("r5") = (s16 *)(owner + 0x90);
+            s16 *p94;
+            register s32 phase0 asm("r0");
+            register s32 phase1 asm("r1");
+            register s32 phase2 asm("r2");
+            register s32 index asm("r6");
+            register s32 *children asm("r9");
+            register u32 *rng asm("r8");
+            register s32 *child_base asm("r4");
+            s32 * volatile state_slot;
+            s16 * volatile saved_p90;
+            register s16 *saved_p94 asm("r10");
+            void *created;
+
+            __asm__ volatile ("" : "=r" (phase0));
+            __asm__ volatile ("" : "=r" (phase1));
+            __asm__ volatile ("" : "=r" (phase2));
+            spawn_x = *p90;
+            __asm__ volatile ("" :: "r" (phase0));
+            __asm__ volatile ("" :: "r" (phase1));
+            __asm__ volatile ("" :: "r" (phase2));
+            p94 = (s16 *)(owner + 0x94);
+            created = func_080D2450(owner, 2, 0,
+                spawn_x, (s32)*p94, 0, 0, 0);
+            *(void **)(owner + 0x10) = created;
+            index = 0;
+            state_slot = p8C;
+            saved_p90 = p90;
+            saved_p94 = p94;
+            child_base = (s32 *)0xC;
+            child_base = (s32 *)((s32)child_base + (s32)owner);
+            children = child_base;
+            phase0 = (s32)&D_03000010;
+            __asm__ volatile ("" : "+r" (phase0));
+            rng = (u32 *)phase0;
+            do {
+                register s32 random_r4 asm("r4");
+                register s32 angle_r5 asm("r5");
+                register s32 perturb_r0 asm("r0");
+                register s32 priority_base asm("r4");
+                s32 priority_scaled;
+                s32 priority;
+                void *spawned;
+                s32 child_off;
+
+                {
+                    register u32 *rng1 asm("r1") = rng;
+                    random_r4 = func_080ECD5C(*rng1);
+                }
+                angle_r5 = func_080ECD98(index << 6, 7);
+                perturb_r0 = (u32)(random_r4 * 9) >> 15;
+                perturb_r0 -= 0x17;
+                angle_r5 += perturb_r0;
+                {
+                    register u32 *rng2 asm("r2") = rng;
+                    priority_scaled = (func_080ECD5C(*rng2) * 0x101) >> 15;
+                }
+                priority_base = 0x100;
+                priority = priority_scaled + priority_base;
+                {
+                    register s32 spawn_x asm("r3");
+                    register s32 *p94_view asm("r4");
+                    spawn_x = *(s16 *)saved_p90;
+                    __asm__ volatile ("" : : "r" (priority_base));
+                    p94_view = saved_p94;
+                    spawned = func_080D2660(owner, 3, 0,
+                        spawn_x, (s32)*(s16 *)p94_view,
+                        0x500, angle_r5, priority, 0);
+                }
+                child_off = index + 2;
+                child_off <<= 2;
+                *(s32 *)((char *)children + child_off) = (s32)spawned;
+                {
+                    register s32 next asm("r0") = index + 1;
+                    next <<= 24;
+                    next = (u32)next >> 24;
+                    index = next;
+                }
+            } while ((u32)index <= 7);
+            func_080D12A0(6, 0);
+            func_080D2790(1);
+            {
+                register s32 *slot asm("r4") = state_slot;
+                *slot = *slot + 1;
+            }
+            return;
+        }
+        return;
+
+    case 2:
+        {
+            register s32 index asm("r6") = 0x18;
+            register void *child asm("r1") = *(void **)(owner + 0xC);
+            u32 child_count;
+            u32 bound;
+            s32 off;
+
+            child_count = *(u32 *)((char *)child + 0x2C);
+            bound = (child_count >> 1) + 0x19;
+            if ((u32)index < bound && *(s32 *)(owner + 0x6C) == 0) {
+                u32 scan_bound = bound;
+                s32 *children = (s32 *)(owner + 0xC);
+                do {
+                    register s32 next asm("r0") = index + 1;
+                    next <<= 24;
+                    next = (u32)next >> 24;
+                    index = next;
+                } while ((u32)index < scan_bound &&
+                    (off = index << 2,
+                     *(s32 *)((char *)children + off)) == 0);
+            }
+            if (index == ((*(volatile u32 *)((char *)child + 0x2C) >> 1) + 0x19)) {
+                index = 1;
+                if (*(s32 *)(owner + 0x10) == 0) {
+                    s32 *children = (s32 *)(owner + 0xC);
+                    do {
+                        register s32 next asm("r0") = index + 1;
+                        next <<= 24;
+                        next = (u32)next >> 24;
+                        index = next;
+                    } while ((u32)index <= 9 &&
+                        (off = index << 2,
+                         *(s32 *)((char *)children + off)) == 0);
+                }
+                if (index == 10) {
+                    func_08095114(owner);
+                }
+            }
+        }
+        return;
+    }
+    return;
+}

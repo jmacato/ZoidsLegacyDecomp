@@ -1,0 +1,3 @@
+.short 0x464A
+.short 0x210A
+.short 0x5E50

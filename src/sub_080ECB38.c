@@ -1,0 +1,8 @@
+#include "m2c_prelude.h"
+void sub_080ECB38(int arg0, void *arg1) {
+    u8 *temp_r0;
+
+    temp_r0 = M2C_FIELD(arg1, u8 **, 0x40);
+    M2C_FIELD(arg1, u8 *, 0x1E) = *temp_r0;
+    M2C_FIELD(arg1, u8 **, 0x40) = temp_r0 + 1;
+}
