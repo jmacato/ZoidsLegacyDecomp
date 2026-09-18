@@ -1,0 +1,1197 @@
+{
+  "format": "zoids-name-choices-v1",
+  "entries": [
+    {
+      "id": "f9ed3681ba1988b5386c900201dc9f7f511c518986399f66cb1c627def9bb577",
+      "english": "BD Member",
+      "japanese": "BD団員",
+      "character_ids": "0x62; 0x63",
+      "mode": "recommended",
+      "name": "Backdraft Member"
+    },
+    {
+      "id": "4f5e45b55d23a95add681163bba80d78881c9250ddb998a214a5670e8f868fcf",
+      "english": "Dr.T",
+      "japanese": "Dr.T",
+      "character_ids": "0x09",
+      "mode": "recommended",
+      "name": "Dr. T"
+    },
+    {
+      "id": "b28028d2940c6cb1569b0220c750167ab6372d169c5ac2a6a32ea324b2e693db",
+      "english": "Dr.D",
+      "japanese": "Dr.ディー",
+      "character_ids": "0x40",
+      "mode": "recommended",
+      "name": "Dr. D"
+    },
+    {
+      "id": "d21f78dbfefcec88194364beba976b63f08d775bcce8059128caf305cb53b2ed",
+      "english": "Zi Ordinary Citizen\n(Female A)",
+      "japanese": "Zi一般市民(女A)",
+      "character_ids": "0x5A",
+      "mode": "recommended",
+      "name": "Zi Citizen (Woman A)"
+    },
+    {
+      "id": "06829680dd58bb04f0745ddd96b10e97ddfad1b6772286799ef1b5f521ce9268",
+      "english": "Zi Ordinary Citizen\n(Male Child)",
+      "japanese": "Zi一般市民(幼男)",
+      "character_ids": "0x5D",
+      "mode": "recommended",
+      "name": "Zi Citizen (Boy)"
+    },
+    {
+      "id": "5f3bb16e75a6e119c1396072ac16c980f1d96cf44b344dcd6db8f6efd12e1f82",
+      "english": "Zi Ordinary Citizen\n(Young Female)",
+      "japanese": "Zi一般市民(若女)",
+      "character_ids": "0x5C",
+      "mode": "recommended",
+      "name": "Zi Citizen (Young Woman)"
+    },
+    {
+      "id": "0fbed84e607362680c2d626abf1a8429cc81dbdf04bad6a1bb0e4299cbbdece8",
+      "english": "Zi Ordinary Citizen\n(Young Male)",
+      "japanese": "Zi一般市民(若男)",
+      "character_ids": "0x5B",
+      "mode": "recommended",
+      "name": "Zi Citizen (Young Man)"
+    },
+    {
+      "id": "97f6f3c5f882fc3662a0e34ec8d27e1c39dba89febf762d97566e9a44a3f44bf",
+      "english": "N/A",
+      "japanese": "なし",
+      "character_ids": "0x00; 0x4D; 0x64",
+      "mode": "recommended",
+      "name": "None"
+    },
+    {
+      "id": "ba43bb00ae632df978f4d6c65b07e0a195e63101a0ee40331e80300d7cc4d01b",
+      "english": "Athle",
+      "japanese": "アトレー",
+      "character_ids": "0x0A",
+      "mode": "recommended",
+      "name": "Atrey"
+    },
+    {
+      "id": "ca06775ebef3283cbeb4f2699b81d43bcfc4414bd585c83f7f5fc48c360d0e95",
+      "english": "Alster",
+      "japanese": "アルスター",
+      "character_ids": "0x2A",
+      "mode": "recommended",
+      "name": "Alster"
+    },
+    {
+      "id": "69b4a8ef8c7a31ab1447065b81b7ab67bce224e1ad3d628507aeffbae7028331",
+      "english": "Alteil",
+      "japanese": "アルタイル",
+      "character_ids": "0x39",
+      "mode": "custom",
+      "name": "Altair"
+    },
+    {
+      "id": "b70582d79bf32d3f21826bbd10c967b2946dafca760a5ecb25209700b4f8ba18",
+      "english": "Albane",
+      "japanese": "アルバーン",
+      "character_ids": "0x05",
+      "mode": "recommended",
+      "name": "Albane"
+    },
+    {
+      "id": "1b758cef1e1d753d2ab41126b208535ebb23e320030276add2ad53ad45c6031b",
+      "english": "Earth",
+      "japanese": "アース",
+      "character_ids": "0x0C",
+      "mode": "recommended",
+      "name": "Earth"
+    },
+    {
+      "id": "b9d053935913f57fcb4df69929198ace4e5c0d3f4a08bf68739f6ad7655c47fd",
+      "english": "Irvine",
+      "japanese": "アーバイン",
+      "character_ids": "0x10; 0x18",
+      "mode": "recommended",
+      "name": "Irvine"
+    },
+    {
+      "id": "eb041720440391efa7595ad2cd18d78ed579206a5d11f3e577a860b97916ba0d",
+      "english": "O’Connell",
+      "japanese": "オコーネル",
+      "character_ids": "0x14",
+      "mode": "recommended",
+      "name": "O’Connell"
+    },
+    {
+      "id": "29f6bfed96d1737fb2b972884ebd3b5962131379a972a0361c1552e667631d79",
+      "english": "Omari",
+      "japanese": "オマリー",
+      "character_ids": "0x25",
+      "mode": "recommended",
+      "name": "Omari"
+    },
+    {
+      "id": "f6aea969594962d464680327a242d2c62a8f5424d9d4a0df91fad5fd6d9401a3",
+      "english": "Opis",
+      "japanese": "オーピス",
+      "character_ids": "0x44",
+      "mode": "recommended",
+      "name": "Opis"
+    },
+    {
+      "id": "01367e2e7a950434594fc0d3bf235a2eeb1a7b298498481a7605e8e3472c3ca4",
+      "english": "Kirkland",
+      "japanese": "カークランド",
+      "character_ids": "0x24",
+      "mode": "recommended",
+      "name": "Kirkland"
+    },
+    {
+      "id": "d222377399583c0ee96a0bdaa777888b6daa99733a8a7e4711fbf9e1618d4815",
+      "english": "Gard",
+      "japanese": "ガルド",
+      "character_ids": "0x34",
+      "mode": "recommended",
+      "name": "Gard"
+    },
+    {
+      "id": "325b705df7c6d3682760b5c3041fc937bcae4a22ce41786917fbbfe37b0cc568",
+      "english": "Gard",
+      "japanese": "ガルド公爵",
+      "character_ids": "0x5E",
+      "mode": "original",
+      "name": "Gard"
+    },
+    {
+      "id": "54068ac13f063fd6e970d085f0b72e56b46c1dfe4002a7088126bf6f016e6a09",
+      "english": "Krueger",
+      "japanese": "クルーガー",
+      "character_ids": "0x15",
+      "mode": "recommended",
+      "name": "Krueger"
+    },
+    {
+      "id": "51aa517047f68981de01797c100071c03aaa4c1261ee650fa72cf893ac42cf30",
+      "english": "Claudia",
+      "japanese": "クローディア",
+      "character_ids": "0x07",
+      "mode": "recommended",
+      "name": "Claudia"
+    },
+    {
+      "id": "fba329aa9b998152f6f7d0921b58cd60a3eaf369f4c72b79b075c9e69807f331",
+      "english": "Gale",
+      "japanese": "ゲイル",
+      "character_ids": "0x43",
+      "mode": "recommended",
+      "name": "Gale"
+    },
+    {
+      "id": "857606abfcc8e0368b26a88de58a49fa51f95e28444ba7135e4eabfc6ef0057c",
+      "english": "Gold Judgeman",
+      "japanese": "ゴールドジャッジマン",
+      "character_ids": "0x48",
+      "mode": "original",
+      "name": "Gold Judgeman"
+    },
+    {
+      "id": "76bb3264104edf578b6326f20106f1b81566b143e1bc5a015222461f380c9503",
+      "english": "Zan",
+      "japanese": "ザン",
+      "character_ids": "0x03",
+      "mode": "recommended",
+      "name": "Zan"
+    },
+    {
+      "id": "6b8fa11b3d0112e457f1bc8139c1924f16292c941504ccd2deaf3c7b9659601e",
+      "english": "Shadow",
+      "japanese": "シャドー",
+      "character_ids": "0x4A",
+      "mode": "recommended",
+      "name": "Shadow"
+    },
+    {
+      "id": "a77019fa3f7ad89e105a0b1aadae6efcf50d0452c2408e440f247ced0a5d87e6",
+      "english": "Schwarz",
+      "japanese": "シュバルツ",
+      "character_ids": "0x1A",
+      "mode": "custom",
+      "name": "Karl"
+    },
+    {
+      "id": "127cc7076b4040f2d1211a192bc410d7940ff291a1966c426f2b164e512f648d",
+      "english": "Jimmy",
+      "japanese": "ジェミー",
+      "character_ids": "0x21",
+      "mode": "recommended",
+      "name": "Jamie"
+    },
+    {
+      "id": "7d48cbc5799ec0614b8e4efd8e9a47ef699906937f80435cf43cca056530843f",
+      "english": "Jack",
+      "japanese": "ジャック",
+      "character_ids": "0x0D",
+      "mode": "recommended",
+      "name": "Jack"
+    },
+    {
+      "id": "e006c273af065372c7e1ecc8183f6ae243f3dbacbd84e197515f9ba700a50ca9",
+      "english": "JackCisco",
+      "japanese": "ジャック・シスコ",
+      "character_ids": "0x29",
+      "mode": "recommended",
+      "name": "Jack Cisco"
+    },
+    {
+      "id": "13c95914f01ffe471d8001a42747d5bf2e98df081c6c07a87220eb561a032eea",
+      "english": "Judgeman",
+      "japanese": "ジャッジマン",
+      "character_ids": "0x46",
+      "mode": "original",
+      "name": "Judgeman"
+    },
+    {
+      "id": "9c21b42c13a9056aca7882172ab843149838a788a92bcfc212022be2c62a4e3f",
+      "english": "Zeke",
+      "japanese": "ジーク",
+      "character_ids": "0x49",
+      "mode": "recommended",
+      "name": "Zeke"
+    },
+    {
+      "id": "80810d4755c55b74181a1b60077128dd8b18ae7ab53ce8a2d862dcae19c83d3d",
+      "english": "Stinger",
+      "japanese": "スティンガー",
+      "character_ids": "0x38",
+      "mode": "recommended",
+      "name": "Stinger"
+    },
+    {
+      "id": "b761af39d2a83639e49bc626d300c2a98840814a1a3e7ffe8fed9b42cc0566df",
+      "english": "Stoller",
+      "japanese": "ストラ",
+      "character_ids": "0x3B",
+      "mode": "recommended",
+      "name": "Stoller"
+    },
+    {
+      "id": "bce8592dd1efb10efe301b1cc4b1cfd0ebbf1ce6ff9a2b7dc8d3ec0eb6c73309",
+      "english": "Specular",
+      "japanese": "スペキュラー",
+      "character_ids": "0x4C",
+      "mode": "recommended",
+      "name": "Specular"
+    },
+    {
+      "id": "b87d8ae5cac70ad1106a7c9dc23eca6be9dec34fb86c8fe6897429e5b09f6d25",
+      "english": "Sebastian",
+      "japanese": "セバスチャン",
+      "character_ids": "0x30",
+      "mode": "recommended",
+      "name": "Sebastian"
+    },
+    {
+      "id": "5bd73a4abf2aafc69287d2919f63ff38fa19849ec76c347dbf7319935657c40c",
+      "english": "Zeru",
+      "japanese": "ゼル",
+      "character_ids": "0x01",
+      "mode": "recommended",
+      "name": "Zell"
+    },
+    {
+      "id": "0fc3fe70557c1dca7848550edbd80a14c5c192a1c0ab09664f042d2e1b84778c",
+      "english": "Solid",
+      "japanese": "ソリッド",
+      "character_ids": "0x2C",
+      "mode": "recommended",
+      "name": "Solid"
+    },
+    {
+      "id": "45407a27dac4b5034fa34d464047e359a4e8ca3bd11bfd482614e463847317ec",
+      "english": "Zoids pilot",
+      "japanese": "ゾイド乗り",
+      "character_ids": "0x52; 0x53; 0x56; 0x57; 0x58; 0x59",
+      "mode": "recommended",
+      "name": "Zoid Pilot"
+    },
+    {
+      "id": "344f4387fca4a5c0a318a8f5162c9ba28eab2e9b6d563ff09a81911b8306db03",
+      "english": "Dark Judgeman",
+      "japanese": "ダークジャッジマン",
+      "character_ids": "0x47",
+      "mode": "original",
+      "name": "Dark Judgeman"
+    },
+    {
+      "id": "7a47d53899ab5abf7d0bd6ac0b2b5100c587b0aae087567255d674ec569c2322",
+      "english": "Tita",
+      "japanese": "ティータ",
+      "character_ids": "0x04",
+      "mode": "recommended",
+      "name": "Tita"
+    },
+    {
+      "id": "7bcf24bd445244803b8cbb6fddb87f8e1094894c336265c391a18ed6a599a9a9",
+      "english": "Dr.Tros",
+      "japanese": "トロス博士",
+      "character_ids": "0x31",
+      "mode": "recommended",
+      "name": "Dr. Toros"
+    },
+    {
+      "id": "f38b8a8b88ce465f38b36e21ac9675702ffd717757ac0edcc39fedb1599a4c42",
+      "english": "Thoma",
+      "japanese": "トーマ",
+      "character_ids": "0x1B",
+      "mode": "recommended",
+      "name": "Thomas"
+    },
+    {
+      "id": "3bdec8d30457db4f257427c427630551eff15d093bd11054148205832cb21a80",
+      "english": "Naomi",
+      "japanese": "ナオミ",
+      "character_ids": "0x23",
+      "mode": "recommended",
+      "name": "Naomi"
+    },
+    {
+      "id": "161372b8d0d205937b29969d364c59f870e2b3922b82b83a60988b901def34aa",
+      "english": "Harry",
+      "japanese": "ハリー",
+      "character_ids": "0x27",
+      "mode": "recommended",
+      "name": "Harry"
+    },
+    {
+      "id": "e113e9e4fffe5db0ec693a6583635e9b944c70861a4d7584ed1254a86c2e5611",
+      "english": "Herman",
+      "japanese": "ハーマン",
+      "character_ids": "0x12",
+      "mode": "recommended",
+      "name": "Herman"
+    },
+    {
+      "id": "a7ec1d82d7f34118b6eb7681e91a14f74c2588902ddce35ce16375270ae66731",
+      "english": "Ballad",
+      "japanese": "バラッド",
+      "character_ids": "0x20",
+      "mode": "recommended",
+      "name": "Brad"
+    },
+    {
+      "id": "01db9c0fec3087d8cb86ad9109652dd6e9a795b324c53a5b922eba53558bd26c",
+      "english": "Van",
+      "japanese": "バン",
+      "character_ids": "0x0E; 0x16",
+      "mode": "recommended",
+      "name": "Van"
+    },
+    {
+      "id": "5d37e36d64054e3e29e910b92d3a6dc946b6115ac520ca406be206c1b4572529",
+      "english": "Pulse",
+      "japanese": "パルス",
+      "character_ids": "0x4B",
+      "mode": "recommended",
+      "name": "Pulse"
+    },
+    {
+      "id": "91b313fb3e912b58de9f77f09daf178d75d986872e500a3c18c40f933148a422",
+      "english": "Palty",
+      "japanese": "パルティ",
+      "character_ids": "0x2B",
+      "mode": "recommended",
+      "name": "Palty"
+    },
+    {
+      "id": "88fadd76f4e40df1697683c64f1e3ea3b8397f17c3addecc8c381c8ebdc867e3",
+      "english": "Hiltz",
+      "japanese": "ヒルツ",
+      "character_ids": "0x65",
+      "mode": "recommended",
+      "name": "Hiltz"
+    },
+    {
+      "id": "61eec19b963dc7447267025da0a9ec48c8785fb2a42180e80efec44e2cfeea91",
+      "english": "Bit",
+      "japanese": "ビット",
+      "character_ids": "0x1E; 0x5F",
+      "mode": "recommended",
+      "name": "Bit"
+    },
+    {
+      "id": "048be0d930f04be712587a85217834c529666474a70690eed0797958cbaaf2d3",
+      "english": "Pierce",
+      "japanese": "ピアス",
+      "character_ids": "0x3C",
+      "mode": "recommended",
+      "name": "Pierce"
+    },
+    {
+      "id": "05f28e9d2298aa6cc541f88d98fd2e0f56520415d84d36c5a715135366ed5505",
+      "english": "Fiona",
+      "japanese": "フィーネ",
+      "character_ids": "0x0F; 0x17",
+      "mode": "recommended",
+      "name": "Fiona"
+    },
+    {
+      "id": "1beb653170f2bd89fb96e96f8a25653c8609b2e6745514fbf95656425df0071e",
+      "english": "Hooma",
+      "japanese": "フウマ",
+      "character_ids": "0x3A",
+      "mode": "recommended",
+      "name": "Fuma"
+    },
+    {
+      "id": "1b356e47799734cb1398d6df431cc9f1685f4b5a1315367cd2ddb78ac09a0d95",
+      "english": "Ford",
+      "japanese": "フォード",
+      "character_ids": "0x13",
+      "mode": "recommended",
+      "name": "Ford"
+    },
+    {
+      "id": "de7bc08168455132556ab0598fdd2a11d0a6e7107019b1e4527fc50a3c5d435f",
+      "english": "Flam",
+      "japanese": "フラン",
+      "character_ids": "0x42",
+      "mode": "recommended",
+      "name": "Fran"
+    },
+    {
+      "id": "29014e9abcc986a99d315d72eb3dfef7d0f250ef2b755f98b4a51d19b9c1a10a",
+      "english": "Blood",
+      "japanese": "ブラッド",
+      "character_ids": "0x45",
+      "mode": "recommended",
+      "name": "Blood"
+    },
+    {
+      "id": "705b568b503c8bf35dd3e60c833729d0cea2332dae4cad53b7048cc99a6d84ea",
+      "english": "Blue Jem",
+      "japanese": "ブルージェム",
+      "character_ids": "0x2D",
+      "mode": "recommended",
+      "name": "Blue Gem"
+    },
+    {
+      "id": "c61f220ca1ac6c65e2976813275a53f0897bccde4bf1807d6cc3fd4f24ae925c",
+      "english": "Proitzen",
+      "japanese": "プロイツェン",
+      "character_ids": "0x3F",
+      "mode": "recommended",
+      "name": "Prozen"
+    },
+    {
+      "id": "15ec21c7e82ce1db80ae4c3f61013a5d5b1e47eb519fc7b8e28a69b691fd8c15",
+      "english": "Vega",
+      "japanese": "ベガ",
+      "character_ids": "0x3D",
+      "mode": "recommended",
+      "name": "Vega"
+    },
+    {
+      "id": "b013a8d702c866f44c8119d1b2663162b6fef64dde626ac350eeadd84658b038",
+      "english": "Benjamin",
+      "japanese": "ベンジャミン",
+      "character_ids": "0x2F",
+      "mode": "recommended",
+      "name": "Benjamin"
+    },
+    {
+      "id": "a1366cbf110a711b530fdbb8e5dc7c1e000c5db427dd4ed930ea2eee9bacf473",
+      "english": "Volta",
+      "japanese": "ボルタ",
+      "character_ids": "0x3E",
+      "mode": "recommended",
+      "name": "Polta"
+    },
+    {
+      "id": "0fc00b403103bb4d240dc82b25d883d45c0a8da189278d4ab0b4aa63f6d2819b",
+      "english": "Max",
+      "japanese": "マックス",
+      "character_ids": "0x08",
+      "mode": "recommended",
+      "name": "Max"
+    },
+    {
+      "id": "1962fc6c7135fbb8a97c5547ffcb997925c610b7582a597f539375af21feb0c4",
+      "english": "Mary",
+      "japanese": "マリー",
+      "character_ids": "0x28",
+      "mode": "recommended",
+      "name": "Mary"
+    },
+    {
+      "id": "cfbaf3610d5f5df4b018d44c226a94b62cb8aae637b64c3ce9273052c69572ae",
+      "english": "Moonbay",
+      "japanese": "ムンベイ",
+      "character_ids": "0x11; 0x19",
+      "mode": "recommended",
+      "name": "Moonbay"
+    },
+    {
+      "id": "aac785611a741275a2af3230e3555bd216f8674b73f1e6287e1307b1aa6bdcf5",
+      "english": "Juno",
+      "japanese": "ユーノ",
+      "character_ids": "0x02; 0x60; 0x61",
+      "mode": "recommended",
+      "name": "Juno"
+    },
+    {
+      "id": "929e390bd27f2987649a446daf1a5097593160c3f3b9ce854af93df679e5a194",
+      "english": "Reiner",
+      "japanese": "ライナー",
+      "character_ids": "0x06",
+      "mode": "recommended",
+      "name": "Reiner"
+    },
+    {
+      "id": "1638df526be23cfb34597b6105adde9505976713b95807cfa0ea37bcc1b77a82",
+      "english": "Lineback",
+      "japanese": "ラインバック",
+      "character_ids": "0x26",
+      "mode": "recommended",
+      "name": "Lineback"
+    },
+    {
+      "id": "7dd2599c9c9149f5733d3f04a499a4b619d3d801e8a29af5dcbcd1e8bde25b6d",
+      "english": "Dr.Raon",
+      "japanese": "ラオン博士",
+      "character_ids": "0x41",
+      "mode": "recommended",
+      "name": "Dr. Laon"
+    },
+    {
+      "id": "32efb72e63c08024c96d609ab1afa6d4465b3ce5cb093778166e03697a54feea",
+      "english": "Leena",
+      "japanese": "リノン",
+      "character_ids": "0x1F",
+      "mode": "recommended",
+      "name": "Leena"
+    },
+    {
+      "id": "66bfab6be362f1edacca53c54fa345a0aa1507b8b7e124793437cb83142c1da5",
+      "english": "Leviathe",
+      "japanese": "リバイアス",
+      "character_ids": "0x36; 0x37",
+      "mode": "recommended",
+      "name": "Leviathe"
+    },
+    {
+      "id": "537ef8fc10463fe37759663cf3bc6e7871536680a1697b8650b559fa25e413fe",
+      "english": "Rease",
+      "japanese": "リーゼ",
+      "character_ids": "0x1D",
+      "mode": "recommended",
+      "name": "Rease"
+    },
+    {
+      "id": "463d9f8ad4213f8a00efc91fb75bf15edd8f0a4af97d83ce554f29fec349e595",
+      "english": "Raven",
+      "japanese": "レイヴン",
+      "character_ids": "0x1C",
+      "mode": "recommended",
+      "name": "Raven"
+    },
+    {
+      "id": "9177b4f9d675774396c73f2da94b5ab63c76a87b67f20578d8e75d1c58654b41",
+      "english": "Leon",
+      "japanese": "レオン",
+      "character_ids": "0x22",
+      "mode": "recommended",
+      "name": "Leon"
+    },
+    {
+      "id": "5108aeb0e353b712919e29266b20ec99e07fc54f037cf2e57c5c6c3371430385",
+      "english": "Lezard",
+      "japanese": "レザール",
+      "character_ids": "0x35",
+      "mode": "recommended",
+      "name": "Lezard"
+    },
+    {
+      "id": "3db16bc970f2303947e177a5923dd11897c63730a8025e4176f34a2f151bd830",
+      "english": "Regina",
+      "japanese": "レジーナ",
+      "character_ids": "0x0B",
+      "mode": "recommended",
+      "name": "Regina"
+    },
+    {
+      "id": "a1fd31450edd74d4beddbc767ba248421964b47a38d6f9b832594402d90e4bcf",
+      "english": "RoyalMask",
+      "japanese": "ロイヤル仮面",
+      "character_ids": "0x2E",
+      "mode": "recommended",
+      "name": "Royal Mask"
+    },
+    {
+      "id": "cc77a8482951079a77c19876fdb9f12e0ada354f8c05045232d82744c6c0c378",
+      "english": "Ordinary Citizen\nWoman B\n(Sitting Right or Left)",
+      "japanese": "一般女B(左右座り)",
+      "character_ids": "0x67",
+      "mode": "recommended",
+      "name": "Woman B (Seated, Side)"
+    },
+    {
+      "id": "d36a8708cefc7c98650d871fec7117e805a9ecac3756b9a90f9e89073374bb00",
+      "english": "Ordinary Citizen\nMan B\n(Sitting Right or\nLeft)",
+      "japanese": "一般男B(左右座り)",
+      "character_ids": "0x68",
+      "mode": "recommended",
+      "name": "Man B (Seated, Side)"
+    },
+    {
+      "id": "cf5dc398a58fec7bd7daae52f52190d1c135de1b2be1e75e14e9264ec1ed802b",
+      "english": "Ordinary Citizen\nOld Male\n(Sitting in Front)",
+      "japanese": "一般老男(正面座り)",
+      "character_ids": "0x66",
+      "mode": "recommended",
+      "name": "Elderly Man (Seated, Front)"
+    },
+    {
+      "id": "4c58e803c5edc298513a2795468671251608cd0e06fb9ce6c325d12acb2fd39b",
+      "english": "Republic warrior",
+      "japanese": "共和国軍人",
+      "character_ids": "0x50",
+      "mode": "recommended",
+      "name": "Republic Soldier"
+    },
+    {
+      "id": "57ac591080942b6fc65cf19d5db0a1f0acac351793730d68207b24d9717d342f",
+      "english": "Imperial warrior",
+      "japanese": "帝国軍人",
+      "character_ids": "0x51",
+      "mode": "recommended",
+      "name": "Imperial Soldier"
+    },
+    {
+      "id": "fd70834cbae112ba3a5c539c955787c1438e4071cee6415deead589028fbabe3",
+      "english": "Bandit",
+      "japanese": "盗賊",
+      "character_ids": "0x4E; 0x4F; 0x54; 0x55",
+      "mode": "recommended",
+      "name": "Bandit"
+    },
+    {
+      "id": "f30d3af4b657b40d9339ab4d7bf067acbcc4046e57727542819f26354cd004ad",
+      "english": "Prpl.Mask",
+      "japanese": "紫仮面",
+      "character_ids": "0x33",
+      "mode": "recommended",
+      "name": "Purple Mask"
+    },
+    {
+      "id": "f4f4b2686d545925ae0ffd5de736943358d7edf1fcb98cc34d399dbb1a203695",
+      "english": "Red Mask",
+      "japanese": "赤仮面",
+      "character_ids": "0x32",
+      "mode": "recommended",
+      "name": "Red Mask"
+    },
+    {
+      "id": "ade206cf2a537514e446a9dfe20a994c5b0a5695bae0f396359b64de939e2ae2",
+      "english": "Message from Alteil",
+      "japanese": "",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Message from Alteil"
+    },
+    {
+      "id": "e28addfe26f716cf8f23be91a017b3b91b18919577951aad8030dcf86b62a9aa",
+      "english": "BD member",
+      "japanese": "BD団員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Backdraft Member"
+    },
+    {
+      "id": "e51c49c9123fd705b3d85df19370c7c0c461468b1e98c2452463de5acce480ec",
+      "english": "News from Dr.T",
+      "japanese": "Dr.Tからの通信",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Message from Dr. T"
+    },
+    {
+      "id": "1d2ab70eb9d80b188a3f0b12223bb61eb4da72d4a939c7b689b8b79301556b81",
+      "english": "Dr.D",
+      "japanese": "Dr.ディ",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Dr. D"
+    },
+    {
+      "id": "92c8b62d028a25d05048f0faf26c3a80a5b552dd5defd3ed0d816d967a96466d",
+      "english": "{03}",
+      "japanese": "{03}",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "{03}"
+    },
+    {
+      "id": "0f6621549e4d7c43484446fa4a305e75fba414db226b9bce1e25a0fec75302d9",
+      "english": "アアス",
+      "japanese": "アアス",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "アアス"
+    },
+    {
+      "id": "23c1d39a7d35ad9c9591152b6b128958c1a02dccc3f79064ad770b6498ec3988",
+      "english": "News from Alteil",
+      "japanese": "アルタイルからの通信",
+      "character_ids": "",
+      "mode": "custom",
+      "name": "Message from Altair"
+    },
+    {
+      "id": "db34bb295411d3b469573dc35245fe5bc5312e74b15c0772e1b67e5273267a12",
+      "english": "Albene",
+      "japanese": "アルバーン",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Albane"
+    },
+    {
+      "id": "a1f3880096b390bfe7093db0408f6605a78667d208ca9ca3fe23fa45c20e4a53",
+      "english": "Waitress",
+      "japanese": "ウェイトレス",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Waitress"
+    },
+    {
+      "id": "1b971636b88321269789a6401481a0171937f6c3a610f84b5a7f1e5561301a63",
+      "english": "Warrior",
+      "japanese": "ウォーリアー",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Warrior"
+    },
+    {
+      "id": "bafe1b16c6eeb47eff616ce288612cf32d51408919afd8fde873be97ff115a8d",
+      "english": "Organoid",
+      "japanese": "オーガノイド",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Organoid"
+    },
+    {
+      "id": "2373b0c7539177f033e842f321bd163ab313b2c7c7d000b35b6b47c45e1ce626",
+      "english": "Kirland",
+      "japanese": "カークランド",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Kirkland"
+    },
+    {
+      "id": "e50cd64ecc22a6687b3103c53812101102aebe9e6c681e8d6f77880a0c61448c",
+      "english": "Prince Gard",
+      "japanese": "ガルド",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Gard"
+    },
+    {
+      "id": "6e4b61babd736b25be2c368c396d654b3659fd79896fc92f7cb501467a2ef66d",
+      "english": "Prince Gard",
+      "japanese": "ガルド公爵",
+      "character_ids": "",
+      "mode": "custom",
+      "name": "Gard"
+    },
+    {
+      "id": "a4a6507f8bf7a8898d0decf5345c303442c62f0cdfaec3b84b7360bfd58f8429",
+      "english": "Cisco",
+      "japanese": "シスコ",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Cisco"
+    },
+    {
+      "id": "0c812bb5ae976129a67deaa37be866d2ee2897ce3bfc77cad91781e4d597eac6",
+      "english": "Juegeman",
+      "japanese": "ジャッジマン",
+      "character_ids": "",
+      "mode": "custom",
+      "name": "Judgeman"
+    },
+    {
+      "id": "135d4591195c784ff18d026cfb31f40ecef50a89af9b66c431ddf4faade3a041",
+      "english": "ジヤツク",
+      "japanese": "ジヤツク",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "ジヤツク"
+    },
+    {
+      "id": "9d9e6da14471682e227983608ed1f5a937c7fd157fcfdcd09bae57c469a72b7f",
+      "english": "Ballad",
+      "japanese": "トロス博士",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Dr. Toros"
+    },
+    {
+      "id": "4e623042aec73b9fd741af914a14b286c85673a59dc519c1b1dad74f3610b2af",
+      "english": "Dr.Totos",
+      "japanese": "トロス博士",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Dr. Toros"
+    },
+    {
+      "id": "d68f4415a7b4fa0b129342d42a43315dfebf2cefa5dbdc2433ac4af219476bd8",
+      "english": "Dr.Tros & Kirkland",
+      "japanese": "トロス博士、カークランド",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Dr. Toros and Kirkland"
+    },
+    {
+      "id": "b0a15b11012ad45c26d93df49d0b73408a02c2e6027500f1cd4d7475d760f6a6",
+      "english": "Harry’s sister",
+      "japanese": "ハリーの姉",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Harry’s Older Sister"
+    },
+    {
+      "id": "a7c42f9e8f4b0e14f82b4f4c39fe3e7b5ff4f0265e43fd90eb9e28ce4ffc22dc",
+      "english": "Balld",
+      "japanese": "バラッド",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Brad"
+    },
+    {
+      "id": "3cdae429c085f441d7e6dd8ff8f1ebaa6faf43f0b02652953390311764c69228",
+      "english": "パルス",
+      "japanese": "パルス",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Pulse"
+    },
+    {
+      "id": "d0e6de5fd8734a78e9def550b9073f36f7cb0eca0a5576fb909a8e227991c9ea",
+      "english": "Hhiltz",
+      "japanese": "ヒルツ",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Hiltz"
+    },
+    {
+      "id": "310e4feba1d05dd08d860002798deb050298c5b6cb1160fddba6d9c2bb07a4e2",
+      "english": "Bit and friends",
+      "japanese": "ビットたち",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Bit and Friends"
+    },
+    {
+      "id": "fb555a3a59aa8410493fb518d20443f198ac23bfe4d6205dabbd18f0b8f59cf7",
+      "english": "Barkeeper",
+      "japanese": "マスター",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Barkeep"
+    },
+    {
+      "id": "8af1e563a37db3cfab9232e617bd15d902cb9edda150b7faa5dc891edc5ae693",
+      "english": "Memo",
+      "japanese": "メモ",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Memo"
+    },
+    {
+      "id": "81f8e51b69ece3fba2281aa9d9e511edc7ae28b09e90bfe7b6c8ba3f13dc4c5b",
+      "english": "Raon",
+      "japanese": "ラオン",
+      "character_ids": "",
+      "mode": "custom",
+      "name": "Dr. Laon"
+    },
+    {
+      "id": "5836b93e2840901d3675339de4291eb6c201b98317d29f8cc1aa14356f842edd",
+      "english": "Lenna",
+      "japanese": "リノン",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Leena"
+    },
+    {
+      "id": "d60fe40d060774dc7bf073b151143b3d705a64c9837bb5d75aaaf098a5a953e0",
+      "english": "レジイナ",
+      "japanese": "レジイナ",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "レジイナ"
+    },
+    {
+      "id": "a57dd9f84dd0b475975ce9b00d7d4fd643ebc3b7fd9f16b04dd6d646e46f0869",
+      "english": "Royal Mask",
+      "japanese": "ロイヤル仮面",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Royal Mask"
+    },
+    {
+      "id": "f3584f75c82087f8050a882ebc13d1f1cd99029215892f534714fc5b438c838d",
+      "english": "Emploee",
+      "japanese": "係員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Attendant"
+    },
+    {
+      "id": "aeffda9e5d251470bccf3d579f889fe9b62fc464086555aa99bd6d3d93e8802a",
+      "english": "Employee",
+      "japanese": "係員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Attendant"
+    },
+    {
+      "id": "39618cfef6adb150cf85bed14699ff3903278fd383e5fa38d6f7066f22ea8a9e",
+      "english": "Woman",
+      "japanese": "女",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Woman"
+    },
+    {
+      "id": "d6d8767b137b739a42e1b767bea0a1b821aa69cb6863c73a937fb2d160c3f288",
+      "english": "Child",
+      "japanese": "子供",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Child"
+    },
+    {
+      "id": "760fe951fd2171f7748956011af9ec96ae4d50ccf72c0b3e00a292d7d7e6efb2",
+      "english": "Battle opponent",
+      "japanese": "対戦相手",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Opponent"
+    },
+    {
+      "id": "91daeb2d628ce18f040637788c20c394d527a5db9c5e8e436f8723b7ffc0f15b",
+      "english": "Match opponent",
+      "japanese": "対戦相手",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Opponent"
+    },
+    {
+      "id": "6d0d2bf3e3f9249ffaae4d21fc49585e56bfacea3557e5f7eb080a1daf2de541",
+      "english": "Matche opponent",
+      "japanese": "対戦相手",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Opponent"
+    },
+    {
+      "id": "6c75636fb0751125793b0536cd4fac9e9a91f1605999809d2e1663fd648ac94a",
+      "english": "Girl",
+      "japanese": "少女",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Girl"
+    },
+    {
+      "id": "bda2a8e6bdd9adff1af9d2bebde53e594916a68da8c52d8997815a1526a1d417",
+      "english": "Boy",
+      "japanese": "少年",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Boy"
+    },
+    {
+      "id": "3f62e97f0d190072eba5cff915c9887ce7af0d1dbce851a6229adf5b7de78251",
+      "english": "Imperial Force",
+      "japanese": "帝国軍",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Imperial Army"
+    },
+    {
+      "id": "07bdfae300a740ea381c5c785abe71f1a599313007984c1eb9a86dc370ef86e9",
+      "english": "Store Clerk",
+      "japanese": "店員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Shop Clerk"
+    },
+    {
+      "id": "96be7c8879f9c7460354d395a389c8ab4b1ab33d2b7ddb303f0214f9f81f7be0",
+      "english": "Store clerk",
+      "japanese": "店員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Shop Clerk"
+    },
+    {
+      "id": "6ddb0f9945f27883043ce90e50998682780872024da07d8e775a2c4dae3221c5",
+      "english": "Villager",
+      "japanese": "村人",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Villager"
+    },
+    {
+      "id": "020da44baeddc6e5cc33a5e9321e83b569b52dbfe77db189d4140e1302177899",
+      "english": "Villagers",
+      "japanese": "村人",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Villager"
+    },
+    {
+      "id": "3a7bd82badf40169eaed24e321d67dcc0001dcdd5a2353c62755339452bbf23c",
+      "english": "Man",
+      "japanese": "男",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Man"
+    },
+    {
+      "id": "e7a30ff5ad13f53850b48c936b5b7a1dc23c6676c2d772041cb45adc4cbb77a2",
+      "english": "Townsperson",
+      "japanese": "町の人",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Townsperson"
+    },
+    {
+      "id": "6ee47e115dbfe3b7ee33c2d4e1e9cb553c9a9633a82e17bb29ab94f18fb01077",
+      "english": "Bandits",
+      "japanese": "盗賊",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Bandit"
+    },
+    {
+      "id": "6b05f326bb99963c5f3fbc1a4d4e4d3e7ec48e650c52ad4ac67652a58389aacc",
+      "english": "Bandit",
+      "japanese": "盗賊たち",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Bandits"
+    },
+    {
+      "id": "b350a908d6656d5d589f3cff6a59a51227050902b8111337d469777f26e5473f",
+      "english": "Bandits",
+      "japanese": "盗賊たち",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Bandits"
+    },
+    {
+      "id": "22c2a176b217533687da47706e86a8c95f54e0f2cfb4f325ebf23075968419e3",
+      "english": "Lab researcher",
+      "japanese": "研究所員",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Researcher"
+    },
+    {
+      "id": "fc59ca20328a67c970cfb9e92340e82a98b19e9410406ca46603a4f3d5c71bc1",
+      "english": "Purple Mask",
+      "japanese": "紫仮面",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Purple Mask"
+    },
+    {
+      "id": "6632f459d60bb5f39de92751254be39f9326949050ef6157cd770b8ec341596c",
+      "english": "Old man",
+      "japanese": "老人",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Old Man"
+    },
+    {
+      "id": "6287c82e7b4683f3564fdef45019365a6b89a1394782e5addb6d1d5b974c1f51",
+      "english": "Villager",
+      "japanese": "老人",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Old Man"
+    },
+    {
+      "id": "46f558085d54cf1e725453f022985f1a180d8477121d24560c03f6c604d275ca",
+      "english": "Mystery Warrior",
+      "japanese": "謎のウォーリアー",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Mysterious Warrior"
+    },
+    {
+      "id": "c1b75a5b4267e3ca855aa71025b17e0a53fbd26ca61cc09df5f2bf0b29521e46",
+      "english": "Mystery warrior",
+      "japanese": "謎のウォーリアー",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Mysterious Warrior"
+    },
+    {
+      "id": "46d478efc8ba46e1883686eed21848f927876147cc18ca36de72cf13e1c5d099",
+      "english": "Mystery woman",
+      "japanese": "謎の女",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Mysterious Woman"
+    },
+    {
+      "id": "1a457f6900cce14b3a1908b1a6157f6119c1c8f55e699b1abc9b8f3ec2b96233",
+      "english": "Mystery man",
+      "japanese": "謎の男",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Mysterious Man"
+    },
+    {
+      "id": "0e0c8d7a4bc487b91bdb9eb969e7f1fb085e6a0879f2d209bf07c8bad514d420",
+      "english": "Gard",
+      "japanese": "警備兵",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Guard"
+    },
+    {
+      "id": "e3f8d6e1ea370a321eb168aaf9938264f91d079a5d0548d10dfa0e1ba02554ca",
+      "english": "Communication",
+      "japanese": "通信",
+      "character_ids": "",
+      "mode": "original",
+      "name": "Communication"
+    },
+    {
+      "id": "3b14b2f3d3d60dcb0ea3da5152f896a6ba64fe406386a1fd606042188d6e842e",
+      "english": "Contact",
+      "japanese": "通信",
+      "character_ids": "",
+      "mode": "original",
+      "name": "Contact"
+    },
+    {
+      "id": "8773b05905eb31853e86b273d44f9d356e42f60a9ce0a2336227f3d3ccc831c6",
+      "english": "Message",
+      "japanese": "通信",
+      "character_ids": "",
+      "mode": "original",
+      "name": "Message"
+    },
+    {
+      "id": "060e677102cefe33e1221287123623193ce117cfffbf446f41a7bab0fce8cdee",
+      "english": "Voice",
+      "japanese": "音声",
+      "character_ids": "",
+      "mode": "recommended",
+      "name": "Voice"
+    }
+  ]
+}
