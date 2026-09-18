@@ -7,3 +7,13 @@ __pycache__/
 *.o
 *.i
 *.sqlite
+
+*.ss*
+*.state
+*.ttf
+*.ttc
+*.otf
+.DS_Store
+/dialogue*.json
+/*.csv
+/*.html
