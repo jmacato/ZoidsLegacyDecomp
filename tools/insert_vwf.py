@@ -12,6 +12,7 @@ import tempfile
 import dialogue
 import insert_scenes
 import text_core
+import title_menu
 
 ROOT = Path(__file__).resolve().parent.parent
 HOOK = 0x97DA8
@@ -75,12 +76,14 @@ STRING_AREA = 0xA80000
 FORMAT_STRING_AREA = 0xB00000
 MESSAGE_TEMPLATE_AREA = 0xB40000
 MOVABLE_POINTER_TABLES = (
+    (0x7A1EF0, 0x7A1F4C),
     (0x7A3624, 0x7A3660),
     (0x7A3660, 0x7A3660 + 152 * 4),
     (0x7A38C0, 0x7A38C0 + 105 * 4),
     (0x7EDD54, 0x7EDD54 + 152 * 4),
     (0x7EDFB4, 0x7EDFB4 + 105 * 4),
     (0x7EE170, 0x7EE170 + 808 * 4),
+    (0x7EEE10, 0x7EEE10 + 10 * 4),
     (0x7EEE38, 0x7EEE38 + 10 * 4),
     (0x7EEE60, 0x7EEE60 + 90 * 4),
     (0x7EEFC8, 0x7EEFC8 + 90 * 4),
@@ -121,10 +124,15 @@ MESSAGE_TEMPLATE_PARTS = (0x103AF4, 0x103B0C, 0x103B88, 0x103BA0, 0x103C38, 0x10
                           0x103D98, 0x103DB8, 0x103DCC, 0x103DD8)
 MONEY_MESSAGE_TAIL = (0xA475E, 0xA4776)
 SPRITE_DIGIT_STRINGS = (0x108C18,)
-TITLE_STRING_COPY_SITES = {
+STRING_COPY_SITES = {
     0x103A38: 0x09D0D0,
     0x103A70: 0x09D138,
     0x103AA8: 0x09D1DE,
+    0x108154: 0x0C9586,
+}
+TITLE_STRING_RESET_SITES = {
+    0x103A38: (0x09D0DC, 0x09D0DE),
+    0x103A70: (0x09D144, 0x09D146),
 }
 WEAPON_LAYOUT_INSTRUCTIONS = {
     0xAE566: (0x2303, 0x2302),
@@ -138,6 +146,14 @@ DECK_RESTRICTION_WINDOW_INSTRUCTIONS = {
     0xC2224: (0x2200, 0x2201),
     0xC222E: (0x2200, 0x2201),
     0xC2238: (0x2200, 0x2201),
+}
+PADDING_GUARD_INSTRUCTIONS = {
+    0xAC8EC: (0xD208, 0xDA08),
+    0xAC956: (0xD208, 0xDA08),
+    0xAC9A2: (0xD208, 0xDA08),
+    0xAC9F6: (0xD208, 0xDA08),
+    0xB2392: (0xD20D, 0xDA0D),
+    0xB2636: (0xD20C, 0xDA0C),
 }
 
 
@@ -312,16 +328,25 @@ def patch_message_templates(rom, original, templates, compose):
     struct.pack_into('<H', rom, start, 0xe000 | ((resume - start - 4) >> 1))
 
 
-def patch_title_string_copy_lengths(rom, original, edits):
-    for offset, instruction in TITLE_STRING_COPY_SITES.items():
+def patch_string_copy_lengths(rom, original, edits):
+    for offset, instruction in STRING_COPY_SITES.items():
         replacement = edits.get(offset)
         if replacement is None:
             continue
         if len(replacement) > 0xff:
-            raise ValueError(f'Title string at 0x{offset:X} exceeds its copy limit.')
+            raise ValueError(f'String at 0x{offset:X} exceeds its copy limit.')
         if rom[instruction:instruction + 2] != original[instruction:instruction + 2]:
-            raise ValueError(f'Title string copy changed at 0x{instruction:X}.')
+            raise ValueError(f'String copy changed at 0x{instruction:X}.')
         struct.pack_into('<H', rom, instruction, 0x2200 | len(replacement))
+        if offset in TITLE_STRING_RESET_SITES:
+            marker = len(replacement) + 1
+            if marker % 2 or marker > 62:
+                raise ValueError(f'Title string at 0x{offset:X} cannot fit its row.')
+            for index, site in enumerate(TITLE_STRING_RESET_SITES[offset]):
+                if rom[site:site + 2] != original[site:site + 2]:
+                    raise ValueError(f'Title string reset changed at 0x{site:X}.')
+                struct.pack_into('<H', rom, site,
+                                 0x8020 | ((marker // 2 + index) << 6) | index)
 
 
 def compile_payload(font, packed):
@@ -385,6 +410,19 @@ memcpy:
     bne 3b
 4:
     mov r0, ip
+    bx lr
+.global memset
+.thumb_func
+memset:
+    movs r3, r0
+    cmp r2, #0
+    beq 8f
+7:
+    strb r1, [r3]
+    adds r3, #1
+    subs r2, #1
+    bne 7b
+8:
     bx lr
 .section .rodata,"a"
 .balign 4
@@ -560,15 +598,27 @@ def check_deck_command_names(rom, checker):
             raise ValueError(f'Deck Command must fit one 104-pixel line: {name}')
 
 
-def release_version():
-    version = (ROOT / 'VERSION').read_text().strip()
+def release_version(path=ROOT / 'VERSION'):
+    version = path.read_text().strip()
     if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version):
-        raise ValueError('VERSION must hold a version such as 1.0.2.')
+        raise ValueError(f'{path.name} must hold a version such as 1.0.2.')
     return version
 
 
-def build_rom(original, document, choices, dialogue_document):
-    version = release_version()
+def load_translation(path, rom_path):
+    document = dialogue.load_dialogue(path, rom_path)
+    missing = (set(MESSAGE_TEMPLATE_SITES) | {0x029043}) - {
+        int(entry['offset'], 16) for entry in document['entries']}
+    if missing:
+        english = dialogue.load_dialogue(ROOT / 'dialogue-en.json', rom_path)
+        document['entries'].extend(entry for entry in english['entries']
+                                   if int(entry['offset'], 16) in missing)
+    return document
+
+
+def build_rom(original, document, choices, dialogue_document, version=None):
+    version = version or release_version()
+    title_labels = dialogue_document.get('title_menu')
     dialogue_document = {'entries': [
         {key: value.replace('{VERSION}', version) if key in ('text', 'build_text') else value
          for key, value in entry.items()}
@@ -645,7 +695,7 @@ def build_rom(original, document, choices, dialogue_document):
                 check_game_text(checker, entry, source, form, True)
             message_templates[offset] = b'|'.join(form[:-1] for form in forms) + b'\0'
             continue
-        if (offset in fixed_copies and offset not in TITLE_STRING_COPY_SITES and
+        if (offset in fixed_copies and offset not in STRING_COPY_SITES and
                 len(replacement) > fixed_copies[offset]):
             raise ValueError(f'Text at {entry["offset"]} is copied with a fixed length of {fixed_copies[offset]} bytes.')
         if offset in scene_offsets:
@@ -670,7 +720,7 @@ def build_rom(original, document, choices, dialogue_document):
     relocate_strings(rom, original, string_edits, string_capacities)
     relocate_strings(rom, original, format_string_edits, string_capacities,
                      FORMAT_STRING_AREA)
-    patch_title_string_copy_lengths(rom, original, string_edits)
+    patch_string_copy_lengths(rom, original, string_edits)
     for offset, replacement in fixed_edits.items():
         rom[offset:offset + len(replacement)] = replacement
     if menu_overrides - handled:
@@ -717,6 +767,10 @@ def build_rom(original, document, choices, dialogue_document):
         if struct.unpack_from('<H', rom, offset)[0] != expected:
             raise ValueError(f'Deck restriction window instruction differs at 0x{offset:X}.')
         struct.pack_into('<H', rom, offset, replacement)
+    for offset, (expected, replacement) in PADDING_GUARD_INSTRUCTIONS.items():
+        if struct.unpack_from('<H', rom, offset)[0] != expected:
+            raise ValueError(f'Padding guard instruction differs at 0x{offset:X}.')
+        struct.pack_into('<H', rom, offset, replacement)
     rom[MENU_COMMAND_HOOK:MENU_COMMAND_HOOK + 12] = (
         struct.pack('<HH', 0x1c38, 0x4641) +
         encode_bl(MENU_COMMAND_HOOK + 4, BASE + MENU_COMMAND_VENEER) +
@@ -743,6 +797,7 @@ def build_rom(original, document, choices, dialogue_document):
     rom[CREDITS_HOOK:CREDITS_HOOK + CREDITS_LENGTH] = struct.pack(
         '<10H4x2I', 0x4640, 0x4629, 0xAA09, 0x4B04, 0x469E, 0x4B04, 0x4718, 0x4680,
         0x7802, 0xE016, CREDITS_RESUME, symbols['credits_line'] | 1)
+    title_menu.patch(rom, title_labels)
     return bytes(rom)
 
 
@@ -753,12 +808,16 @@ def main():
     parser.add_argument('--kerning', type=Path, default=ROOT / 'kerning-choices.json')
     parser.add_argument('--dialogue', type=Path, default=ROOT / 'dialogue-en.json')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--version-file', type=Path)
     args = parser.parse_args()
     try:
         document = dialogue.load_scenes(args.draft, args.rom)
         choices = json.loads(args.kerning.read_text())
-        text_data = dialogue.load_dialogue(args.dialogue, args.rom)
-        rom = build_rom(dialogue.read_rom(args.rom), document, choices, text_data)
+        text_data = load_translation(args.dialogue, args.rom)
+        version_file = args.version_file or ROOT / (
+            'VERSION_ES' if args.dialogue.name == 'dialogue-es.json' else 'VERSION')
+        rom = build_rom(dialogue.read_rom(args.rom), document, choices, text_data,
+                        release_version(version_file))
         args.output.write_bytes(rom)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         parser.exit(1, f'Error: {error}\n')

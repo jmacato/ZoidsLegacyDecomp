@@ -1,6 +1,10 @@
 import { createAnalogPanels } from './crt.js';
 import { createHudMotion } from './hud-motion.js';
 
+const FRAME_MS = 40;
+const motionAllowed = () => !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+  !document.documentElement.matches('.intro-pending, .intro-running');
+
 export function createEffects() {
   for (const feature of document.querySelectorAll('.feature')) {
     const template = document.querySelector(`#feature-frame-${feature.dataset.frame}`);
@@ -11,10 +15,18 @@ export function createEffects() {
     const { width: baseWidth, height: baseHeight } = frame.viewBox.baseVal;
     const split = Number(frame.dataset.stretchY);
     const paths = [...frame.querySelectorAll('path')].map(path => [path, path.getAttribute('d')]);
+    const title = frame.classList.contains('patcher-frame') ? frame.parentElement.querySelector('.patcher-title') : null;
+    const hatches = title ? [...frame.querySelectorAll('.feature-hatch')] : [];
     let resizeFrame;
-    new ResizeObserver(([{ contentRect: { width, height } }]) => {
+    let ratchet;
+    let size;
+    let drawnWidth;
+    let drawnRibbon = 230;
+    const observer = new ResizeObserver(entries => {
+      size = entries.find(entry => entry.target === frame)?.contentRect ?? size;
       cancelAnimationFrame(resizeFrame);
-      if (!width) return;
+      if (!size?.width) return;
+      const { width, height } = size;
       // Defer geometry writes so WebKit can finish delivering resize notifications.
       resizeFrame = requestAnimationFrame(() => {
         if (frame.classList.contains('section-frame')) {
@@ -22,14 +34,45 @@ export function createEffects() {
         }
         const frameHeight = Math.round(baseWidth * height / width);
         frame.setAttribute('viewBox', `0 0 ${baseWidth} ${frameHeight}`);
-        // Extend the straight rails; preserve the traced corner angles and trim.
-        for (const [path, original] of paths) {
-          path.setAttribute('d', original.replace(/([ML])([\d.]+) ([\d.]+)/g,
-            (_, command, x, y) => `${command}${x} ${Number(y) + (Number(y) > split ? frameHeight - baseHeight : 0)}`));
-        }
+        const scale = width / baseWidth;
+        const draw = ribbon => {
+          drawnRibbon = ribbon;
+          if (title) drawPatcherTitle(title, ribbon, scale);
+          // Grow the title ribbon to its text and slide the notch over; the hatch row narrows to fit.
+          const shift = ribbon - 230;
+          const hatchScale = (155 - shift) / 155;
+          for (const [path, original] of paths) {
+            const hatch = hatches.indexOf(path);
+            const source = hatch < 0 ? original : hatchPath(Math.round(335 + shift + hatch * 42 * hatchScale), Math.round(29 * hatchScale));
+            path.setAttribute('d', source.replace(/([ML])([\d.]+) ([\d.]+)/g, (_, command, x, y) => {
+              const notch = hatch < 0 && shift && Number(y) <= 61 && Number(x) >= 246 && Number(x) <= 372;
+              return `${command}${Number(x) + (notch ? shift : 0)} ${Number(y) + (Number(y) > split ? frameHeight - baseHeight : 0)}`;
+            }));
+          }
+        };
+        const target = title ? fitPatcherTitle(title, scale) : 230;
+        const from = drawnRibbon;
+        // Text changes ratchet the ribbon over in HUD frames; window resizes snap.
+        const steps = width === drawnWidth && target !== from && motionAllowed() ? [.35, .7, 1] : [1];
+        drawnWidth = width;
+        clearTimeout(ratchet);
+        const step = index => {
+          draw(Math.round(from + (target - from) * steps[index]));
+          if (index + 1 < steps.length) ratchet = setTimeout(() => step(index + 1), FRAME_MS);
+        };
+        step(0);
       });
-    }).observe(frame);
+    });
+    observer.observe(frame);
+    if (title) observer.observe(title.querySelector('span'));
   }
+
+  for (const picker of document.querySelectorAll('.language-picker')) {
+    markWrappedRows(picker);
+    animateLanguageChanges(picker);
+  }
+  for (const tablist of document.querySelectorAll('.edition-tabs')) animateTabChanges(tablist);
+  ghostOnInteraction();
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const analogPanels = createAnalogPanels(document.querySelectorAll('.actions, .project-overview, .feature'), reducedMotion);
@@ -93,7 +136,7 @@ export function createEffects() {
     const rate = remaining / 3600;
     const reveal = (selector, delay, duration, horizontal = false) => {
       const slit = horizontal ? 'inset(0 48% 0 48%)' : 'inset(48% 0 48% 0)';
-      for (const element of document.querySelectorAll(selector)) {
+      for (const element of typeof selector === 'string' ? document.querySelectorAll(selector) : [selector]) {
         const timing = { id: 'page-intro', delay: delay * rate, duration: duration * rate, fill: 'both' };
         introAnimations.push(element.animate([
           { visibility: 'hidden', clipPath: slit, offset: 0, easing: 'steps(1, end)' },
@@ -125,6 +168,22 @@ export function createEffects() {
     reveal('.actions .frame-indicators', 920, 480, true);
     reveal('.actions .frame-bottom', 1120, 480, true);
     reveal('#patcher-title', 1170, 400, true);
+    const languages = document.querySelectorAll('.language-option');
+    languages.forEach((option, index) => reveal(option, 1330 + index * 90, 380, true));
+    const tailDelay = 1330 + languages.length * 90;
+    reveal('.language-tail', tailDelay, 380, true);
+    const powerOn = (element, frames, delay) => introAnimations.push(element.animate(
+      frames.map(frame => ({ ...frame, easing: 'steps(1, end)' })),
+      { id: 'page-intro', delay: (tailDelay + 200 + delay * FRAME_MS) * rate, duration: (frames.length - 1) * FRAME_MS * rate, fill: 'both' },
+    ));
+    for (const wedge of document.querySelectorAll('.language-wedge')) {
+      powerOn(wedge, ['0', '0', '.35', '.35', '.7', '1'].map(x => ({ transform: `scaleX(${x})` })), 0);
+    }
+    for (const group of [document.querySelectorAll('.language-chevrons path'), document.querySelectorAll('.language-signal > span')]) {
+      group.forEach((cell, index) => powerOn(cell, [
+        ...[...group].map((_, frame) => ({ opacity: frame === index ? 1 : .2 })), { opacity: 1 },
+      ], group[0].closest('.language-signal') ? 3 : 0));
+    }
     reveal('#drop-zone', 1510, 490, true);
     reveal('#patch-button', 1810, 410, true);
     reveal('.message-panel', 2160, 300, true);
@@ -216,4 +275,183 @@ export function createEffects() {
 
   analogPanels.prepare().then(startIntro).catch(finishIntro);
   return { powerCrt };
+}
+
+function fitPatcherTitle(title, scale) {
+  const label = title.querySelector('span');
+  title.style.fontSize = '';
+  const fontSize = parseFloat(getComputedStyle(title).fontSize);
+  const needed = (label.offsetWidth + 2 * fontSize) / scale;
+  const fit = Math.min(1, (230 + 93 - 28) / needed);
+  if (fit < 1) title.style.fontSize = `${fontSize * fit}px`;
+  return Math.max(230, Math.ceil(needed * fit + 28));
+}
+
+function drawPatcherTitle(title, ribbon, scale) {
+  title.style.width = `${ribbon * scale}px`;
+  title.style.height = `${28 * scale}px`;
+  title.querySelector('svg').setAttribute('viewBox', `0 0 ${ribbon} 28`);
+  title.querySelector('path').setAttribute('d', `M0 28 L28 0 L${ribbon} 0 L${ribbon - 28} 28 Z`);
+}
+
+function hatchPath(x, width) {
+  return `M${x} 9 L${x + width} 9 L${x + width + 44} 53 L${x + 44} 53 Z`;
+}
+
+function markWrappedRows(container) {
+  let resizeFrame;
+  // Items that start a wrapped line drop their leading slant, so rows read like the first one.
+  const mark = () => {
+    const items = [...container.children];
+    for (const item of items) item.classList.remove('row-start');
+    for (let pass = 0; pass < items.length; pass++) {
+      let changed = false;
+      let top = -Infinity;
+      for (const item of items) {
+        const start = item.offsetTop > top + 1;
+        top = item.offsetTop;
+        if (start !== item.classList.contains('row-start')) {
+          item.classList.toggle('row-start', start);
+          changed = true;
+        }
+      }
+      if (!changed) break;
+    }
+  };
+  const observer = new ResizeObserver(() => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(mark);
+  });
+  for (const element of [container, ...container.children]) observer.observe(element);
+}
+
+function stepped(element, frames, delay = 0) {
+  return element.animate(frames.map(frame => ({ ...frame, easing: 'steps(1, end)' })), {
+    duration: (frames.length - 1) * FRAME_MS,
+    delay: delay * FRAME_MS,
+  });
+}
+
+// Zentrix stutter, slam, echo, and chase, fired once when the selected language changes.
+function animateLanguageChanges(picker) {
+  const options = () => [...picker.querySelectorAll('.language-option')];
+  let selected = options().find(option => option.getAttribute('aria-pressed') === 'true');
+  let running = [];
+  new MutationObserver(() => {
+    const previous = selected;
+    selected = options().find(option => option.getAttribute('aria-pressed') === 'true');
+    if (!selected || selected === previous || !motionAllowed()) return;
+    for (const animation of running) animation.cancel();
+    const forward = !previous || options().indexOf(selected) > options().indexOf(previous);
+    const code = selected.querySelector('span');
+    running = [
+      stepped(selected, [{ opacity: .3 }, { opacity: 1 }, { opacity: .5 }, { opacity: 1 }, { opacity: .7 }, { opacity: 1 }]),
+      stepped(code, [
+        { transform: 'scale(1.45)', opacity: .2 },
+        { transform: 'scale(1.18)', opacity: .55 },
+        { transform: 'scale(1.04)', opacity: 1 },
+        { transform: 'scale(1)', opacity: 1 },
+        { transform: 'scale(1)', opacity: .5 },
+        { transform: 'scale(1)', opacity: 1 },
+      ]),
+    ];
+    running.push(...ghost(code));
+    if (previous) {
+      running.push(stepped(previous, [{ opacity: 1 }, { opacity: .4 }, { opacity: 1 }, { opacity: 1 }, { opacity: .5 }, { opacity: 1 }]));
+    }
+    const stripes = [...picker.querySelectorAll('.language-chevrons path')];
+    if (!forward) stripes.reverse();
+    stripes.forEach((stripe, index) => running.push(stepped(stripe, [
+      ...stripes.map((_, frame) => ({ opacity: frame === index ? 1 : .2 })), { opacity: .2 }, { opacity: 1 },
+    ], 1)));
+    const wedge = picker.querySelector('.language-wedge');
+    if (wedge) {
+      running.push(stepped(wedge, [
+        { transform: 'scaleX(0)' }, { transform: 'scaleX(0)' }, { transform: 'scaleX(.35)' }, { transform: 'scaleX(.35)' },
+        { transform: 'scaleX(.7)' }, { transform: 'scaleX(1)' },
+      ]));
+    }
+    const segments = [...picker.querySelectorAll('.language-signal > span')];
+    if (!forward) segments.reverse();
+    segments.forEach((segment, index) => running.push(stepped(segment, [
+      ...segments.map((_, frame) => ({ opacity: frame === index ? 1 : .2 })), { opacity: 1 },
+    ], 3)));
+    const title = document.querySelector('.patcher-title span');
+    if (title) {
+      running.push(stepped(title, [
+        { opacity: 0 }, { opacity: 0 }, { opacity: .6 }, { opacity: .2 }, { opacity: 1 }, { opacity: .5 }, { opacity: 1 },
+      ]));
+    }
+  }).observe(picker, { subtree: true, attributeFilter: ['aria-pressed'] });
+}
+
+const ghosted = new WeakMap();
+// Zentrix 04_054.42 echoes: two copies of the control's label drift apart and fade.
+function ghost(source) {
+  const now = performance.now();
+  if (!source || now - (ghosted.get(source) ?? -Infinity) < 120) return [];
+  ghosted.set(source, now);
+  const rect = source.getBoundingClientRect();
+  return [-1, 1].map(direction => {
+    const copy = source.cloneNode(true);
+    for (const element of [copy, ...copy.querySelectorAll('*')]) {
+      element.removeAttribute('id');
+      element.removeAttribute('data-i18n');
+    }
+    copy.classList.add('control-ghost');
+    copy.setAttribute('aria-hidden', 'true');
+    copy.style.left = '0px';
+    copy.style.top = '0px';
+    source.after(copy);
+    const placed = copy.getBoundingClientRect();
+    copy.style.left = `${rect.left - placed.left}px`;
+    copy.style.top = `${rect.top - placed.top}px`;
+    copy.style.width = `${rect.width}px`;
+    copy.style.height = `${rect.height}px`;
+    const animation = stepped(copy, [0, .65, .45, .3, .15, 0].map((opacity, index) => ({
+      transform: `translateX(${direction * index * 3}px) scale(${1 + index * .04})`, opacity,
+    })));
+    animation.finished.catch(() => {}).finally(() => copy.remove());
+    return animation;
+  });
+}
+
+function ghostSource(control) {
+  const visible = element => element.getClientRects().length > 0;
+  return [...control.querySelectorAll('.control-label'), ...control.querySelectorAll(':scope > span:not([aria-hidden])')].find(visible) ??
+    control.querySelector(':scope > svg');
+}
+
+function ghostOnInteraction() {
+  const controls = '.menu-control, .small-control, .edition-tab, .language-option';
+  for (const type of ['click', 'drop']) {
+    document.addEventListener(type, event => {
+      const control = event.target.closest?.(controls);
+      if (control && !control.matches(':disabled') && motionAllowed()) ghost(ghostSource(control));
+    });
+  }
+}
+
+function animateTabChanges(tablist) {
+  let running = [];
+  new MutationObserver(records => {
+    const selected = records.map(record => record.target).find(tab => tab.getAttribute('aria-selected') === 'true');
+    const previous = records.map(record => record.target).find(tab => tab.getAttribute('aria-selected') !== 'true');
+    if (!selected || !motionAllowed()) return;
+    for (const animation of running) animation.cancel();
+    const label = ghostSource(selected);
+    running = [
+      stepped(selected, [{ opacity: .3 }, { opacity: 1 }, { opacity: .5 }, { opacity: 1 }, { opacity: .7 }, { opacity: 1 }]),
+      stepped(label, [
+        { transform: 'scale(1.3)', opacity: .2 },
+        { transform: 'scale(1.12)', opacity: .55 },
+        { transform: 'scale(1.03)', opacity: 1 },
+        { transform: 'scale(1)', opacity: 1 },
+        { transform: 'scale(1)', opacity: .5 },
+        { transform: 'scale(1)', opacity: 1 },
+      ]),
+      ...ghost(label),
+    ];
+    if (previous) running.push(stepped(previous, [{ opacity: 1 }, { opacity: .4 }, { opacity: 1 }, { opacity: 1 }, { opacity: .5 }, { opacity: 1 }]));
+  }).observe(tablist, { subtree: true, attributeFilter: ['aria-selected'] });
 }

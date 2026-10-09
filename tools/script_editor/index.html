@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.title">Zoids Legacy script editor</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <svg class="svg-library" aria-hidden="true"><symbol id="zoid-joint" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5" fill="var(--header)"/><path d="M5.5 5L14.5 15" stroke="var(--badge)" stroke-width="2.5"/></symbol></svg>
+    <div class="brand">
+      <h1 class="wordmark" aria-label="Zoids Legacy">ZOIDS<sup class="wordmark-trademark" aria-hidden="true">™</sup><span>LEGACY</span></h1>
+      <span class="edition-label">
+        <span class="joint-cap" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#zoid-joint"/></svg></span>
+        <span data-i18n="brand.edition">SCRIPT EDITOR</span>
+        <span class="joint-cap" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#zoid-joint"/></svg></span>
+      </span>
+    </div>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="Game language" data-i18n-aria-label="language.group">
+        <button type="button" data-lang="en" aria-pressed="true">ENG</button>
+        <button type="button" data-lang="es" aria-pressed="false">ESP</button>
+      </div>
+      <label class="ui-toggle" title="Show the editor in the game language you pick" data-i18n-title="ui.toggleHelp"><input id="translate-ui" type="checkbox"> <span data-i18n="ui.toggle">Translate interface</span></label>
+      <span id="global-status" role="status"></span><button id="build" disabled data-i18n="build">Build ROM</button>
+    </div>
+  </header>
+  <main>
+    <aside>
+      <div class="filters">
+        <label for="search" data-i18n="search.label">Search text or offset</label>
+        <input id="search" type="search" autocomplete="off" placeholder="Search all records" data-i18n-placeholder="search.placeholder">
+        <div class="filter-row"><select id="kind" aria-label="Record type" data-i18n-aria-label="kind.aria"><option value="" data-i18n="kind.all">All text</option><option value="scene" data-i18n="kind.scene">Scenes</option><option value="menu" data-i18n="kind.menu">Menus</option><option value="event" data-i18n="kind.event">Other events</option><option value="string" data-i18n="kind.string">Other strings</option></select><select id="changed" aria-label="Status" data-i18n-aria-label="status.aria"><option value="" data-i18n="status.any">Any status</option><option value="edited" data-i18n="status.edited">Edited</option><option value="unedited" data-i18n="status.unedited">Not edited</option><option value="clipped" data-i18n="status.clipped">Clipped in game</option></select></div>
+        <div class="filter-row"><select id="category" aria-label="Category" data-i18n-aria-label="category.aria"><option value="" data-i18n="category.all">All categories</option></select></div>
+        <span id="count"></span>
+      </div>
+      <div id="list" role="listbox" aria-label="Game text records" data-i18n-aria-label="list.aria"></div>
+    </aside>
+    <section id="editor" aria-live="polite">
+      <div id="empty" data-i18n="empty">Select a record to inspect its game data.</div>
+      <div id="detail" hidden>
+        <div class="record-head"><div><span id="type" class="badge"></span><h2 id="offset"></h2><p id="context"></p></div><div class="record-tools"><span id="size" class="size"></span><button id="open-control-guide" type="button" data-i18n="controlGuide">Control guide</button></div></div>
+        <p id="clipped-note" class="clipped-note" hidden></p>
+        <div class="edit-panel">
+          <div class="sources"><div><h3 data-i18n="source.usa">USA source</h3><pre id="original"></pre></div><div id="reference-panel"><h3 data-i18n="source.reference">English retranslation</h3><pre id="reference"></pre></div></div>
+          <label for="draft" class="draft-label" id="draft-label">Game text</label>
+          <textarea id="draft" spellcheck="false" wrap="off"></textarea>
+          <div class="control-editor" aria-label="Text controls">
+            <label for="control-type" data-i18n="control.label">Control</label>
+            <select id="control-type">
+              <option value="04">Alignment</option>
+              <option value="08">Alignment area</option>
+              <option value="06">Advance</option>
+              <option value="07">Template anchor</option>
+              <option value="01">Color</option>
+              <option value="03">Player name</option>
+              <option value="0A">New line</option>
+              <option value="02">Legacy position</option>
+            </select>
+            <label id="control-a-label" for="control-a" data-i18n="control.value">Value</label>
+            <input id="control-a" type="number" min="0" max="255" value="0">
+            <label id="control-b-label" for="control-b" hidden>Row</label>
+            <input id="control-b" type="number" min="0" max="255" value="0" hidden>
+            <button id="insert-control" type="button" data-i18n="control.insert">Insert / update</button>
+          </div>
+          <p id="rule"></p>
+          <p id="control-help" class="control-help"></p>
+          <label class="preview-setting" for="player-name"><span data-i18n="player.label">Preview player name</span> <input id="player-name" type="text" value="Zeru" maxlength="8" spellcheck="false" autocomplete="off"></label>
+          <div class="actions"><button id="save" disabled data-i18n="save">Save game data</button><button id="preview" data-i18n="refresh">Refresh preview</button><span id="save-status" role="status"></span></div>
+        </div>
+        <div id="preview-result" class="show-script" hidden>
+          <div class="preview-tabs"><button id="show-script" type="button" aria-pressed="true" data-i18n="tab.script">Script</button><button id="show-render" type="button" aria-pressed="false" data-i18n="tab.render">Render</button></div>
+          <div id="script-context" aria-label="Game script context"></div>
+          <div id="render-preview">
+            <canvas id="canvas" tabindex="0" aria-label="Game screen preview. Press A or the right arrow to advance the dialogue." data-i18n-aria-label="canvas.aria"></canvas>
+            <div id="page-controls" hidden>
+              <button id="page-previous" type="button" aria-label="Previous stop" data-i18n-aria-label="page.previous">◀</button>
+              <output id="page-label" aria-live="polite"></output>
+              <button id="page-next" type="button" aria-label="Press A to advance" data-i18n-aria-label="page.next">A ▶</button>
+            </div>
+            <div id="credits-controls" hidden>
+              <button id="credits-play" type="button" data-i18n="credits.play">Play</button>
+              <label for="credits-position" data-i18n="credits.scroll">Scroll</label>
+              <input id="credits-position" type="range" min="0" value="0" step="1">
+              <output id="credits-line" for="credits-position"></output>
+            </div>
+          </div>
+          <p id="preview-meta"></p>
+          <div id="encoded-units" aria-label="Encoded game bytes" data-i18n-aria-label="units.aria"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dialog id="control-guide" aria-labelledby="control-guide-title">
+    <div class="guide-head"><h2 id="control-guide-title" data-i18n="guide.title">Control bytes</h2><button id="close-control-guide" type="button" data-i18n="guide.close">Close</button></div>
+    <p class="guide-intro" data-i18n="guide.intro">Text tokens use hexadecimal bytes. The editor’s number boxes use decimal values.</p>
+    <div id="control-guide-list" class="guide-list"></div>
+  </dialog>
+  <script src="/i18n.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

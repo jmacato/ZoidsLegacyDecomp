@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0d1318">
-  <meta name="description" content="Apply the Zoids™ Legacy RE:TRANSLATION to your own USA ROM.">
-  <title>Zoids™ Legacy — RE:TRANSLATION</title>
+  <meta name="description" content="Apply the Zoids™ Legacy RE:TRANSLATION to your own USA ROM." data-i18n-content="page.description">
+  <title data-i18n="page.title">Zoids™ Legacy — RE:TRANSLATION</title>
   <script>
     try {
       const saved = localStorage.getItem('zoids-theme');
@@ -20,10 +20,11 @@
   </script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="decal-layout.css">
+  <!-- Edit text in locales/en.js and locales/es.js. HTML text is an English fallback. -->
   <script type="module" src="app.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#rom-input">Skip to ROM selection</a>
+  <a class="skip-link" href="#rom-input" data-i18n="skip.rom">Skip to ROM selection</a>
   <!-- Frame geometry adapted from the supplied Vecteezy reference by Patthana Nirangkul.
        https://www.vecteezy.com/vector-art/36420197 -->
   <svg class="svg-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -234,18 +235,18 @@
   <div class="page">
     <header class="page-header">
       <div class="brand">
-        <h1 class="project-title"><a class="wordmark" href="#" aria-label="Zoids™ Legacy home">ZOIDS<sup class="wordmark-trademark" aria-hidden="true">™</sup><span>LEGACY</span></a></h1>
+        <h1 class="project-title"><a class="wordmark" href="#" aria-label="Zoids™ Legacy home" data-i18n-aria-label="brand.homeAria">ZOIDS<sup class="wordmark-trademark" aria-hidden="true">™</sup><span>LEGACY</span></a></h1>
         <span class="edition-label flicker-unit">
           <span class="joint-cap" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#zoid-joint"/></svg></span>
-          <span>RE:TRANSLATION</span>
+          <span data-i18n="brand.edition">RE:TRANSLATION</span>
           <span class="joint-cap" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#zoid-joint"/></svg></span>
         </span>
       </div>
-      <nav aria-label="Page controls">
-        <a class="small-control" aria-label="Source on GitHub" title="Source on GitHub" href="https://github.com/jmacato/ZoidsLegacyDecomp" target="_blank" rel="noopener noreferrer"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.63 0c2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.69.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.63 5.28-5.14 5.56.4.35.76 1.04.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg><span>SOURCE</span></a>
-        <button id="theme-toggle" class="small-control" type="button" aria-label="Switch to light mode">
+      <nav aria-label="Page controls" data-i18n-aria-label="header.controls">
+        <a class="small-control" aria-label="Source on GitHub" data-i18n-aria-label="header.sourceAria" title="Source on GitHub" data-i18n-title="header.sourceAria" href="https://github.com/jmacato/ZoidsLegacyDecomp" target="_blank" rel="noopener noreferrer"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.63 0c2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.69.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.63 5.28-5.14 5.56.4.35.76 1.04.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg><span data-i18n="header.source">SOURCE</span></a>
+        <button id="theme-toggle" class="small-control" type="button" aria-label="Switch to light mode" data-i18n-aria-label="theme.lightAria">
           <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10 L10 7 L14 7 L17 10 L17 14 L14 17 L10 17 L7 14 Z"/><path d="M12 1 L12 4 M12 20 L12 23 M1 12 L4 12 M20 12 L23 12 M4 4 L6 6 M18 18 L20 20 M4 20 L6 18 M18 6 L20 4"/></svg>
-          <span id="theme-label">LIGHT MODE</span>
+          <span id="theme-label" data-i18n="theme.lightLabel">LIGHT MODE</span>
         </button>
       </nav>
     </header>
@@ -274,27 +275,32 @@
             </svg>
             <h2 id="patcher-title" class="patcher-title flicker-unit">
               <svg viewBox="0 0 230 28" aria-hidden="true"><path d="M0 28 L28 0 L230 0 L202 28 Z"/></svg>
-              <span>ROM PATCHER</span>
+              <span data-i18n="patch.title">ROM PATCHER</span>
             </h2>
             <div class="action-list">
+              <div class="language-picker" role="group" aria-label="Patch and page language" data-i18n-aria-label="language.group">
+                <button class="language-option" type="button" data-language="en" aria-label="English" data-i18n-aria-label="language.english" aria-pressed="true" title="English" data-i18n-title="language.english"><span data-i18n="language.shortEnglish">ENG</span></button>
+                <button class="language-option" type="button" data-language="es" aria-label="Español (in progress)" data-i18n-aria-label="language.spanish" aria-pressed="false" title="Español (in progress)" data-i18n-title="language.spanish"><span data-i18n="language.shortSpanish">ESP</span></button>
+                <span class="language-tail" aria-hidden="true"><svg class="language-chevrons" viewBox="0 0 84 44"><path d="M8 44 L52 0 L64 0 L20 44 Z"/><path d="M28 44 L72 0 L84 0 L40 44 Z"/></svg><span class="language-readout"><span class="language-wedge"></span><span class="language-signal"><span></span><span></span><span></span><span></span></span></span></span>
+              </div>
               <label id="drop-zone" class="drop-zone menu-control" for="rom-input">
-                <input id="rom-input" type="file" accept=".gba" aria-describedby="file-help" aria-label="Select your Zoids™ Legacy USA ROM">
+                <input id="rom-input" type="file" accept=".gba" aria-describedby="file-help" aria-label="Select your Zoids™ Legacy USA ROM" data-i18n-aria-label="patch.romAria">
                 <span class="control-surface flicker-unit" aria-hidden="true"></span>
                 <span class="control-content">
-                  <span class="control-label">Select ROM</span>
-                  <span id="file-help" class="control-help">or drop your .gba file here</span>
+                  <span class="control-label" data-i18n="patch.selectRom">Select ROM</span>
+                  <span id="file-help" class="control-help" data-i18n="patch.dropHint">or drop your .gba file here</span>
                 </span>
               </label>
               <button id="patch-button" class="patch-button menu-control" type="button" disabled>
                 <span class="control-surface flicker-unit" aria-hidden="true"></span>
                 <span class="control-content">
-                  <span id="button-label" class="control-label">Patch &amp; download</span>
+                  <span id="button-label" class="control-label" data-i18n="patch.button">Patch &amp; download</span>
                 </span>
               </button>
             </div>
             <div class="message-panel">
               <span id="status-dot" class="status-dot muted" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-              <p id="status" role="status" aria-live="polite">Select your USA ROM to begin.</p>
+              <p id="status" role="status" aria-live="polite" data-i18n="patch.initialStatus">Select your USA ROM to begin.</p>
               <span class="status-dot muted" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
             </div>
             <div class="panel-markings markings-service" aria-hidden="true">
@@ -310,7 +316,7 @@
               <svg data-ink="plate" data-decal="patcher-jettison" class="decal decal-technical decal-jettison" viewBox="0 0 489 287"><g class="decal-motion" data-motion="shutter"><use href="#decal-kit-jettison" width="489" height="287"/></g></svg>
               <svg data-ink="inset" data-decal="patcher-vent" class="decal decal-technical decal-static-vent" viewBox="0 0 890 940"><g class="decal-motion" data-motion="slam"><use href="#decal-kit-static-vent" width="890" height="940"/></g></svg>
             </div>
-            <noscript><p class="noscript">Enable JavaScript to apply the patch in your browser.</p></noscript>
+            <noscript><p class="noscript" data-i18n="noscript.message">Enable JavaScript to apply the patch in your browser.</p></noscript>
           </div>
 
         </section>
@@ -375,10 +381,10 @@
               <path data-ink="rail" class="feature-hatch" d="M224 351 L228 351 L229 352 L225 352 Z"/>
             </g>
           </svg>
-          <h2 id="about-title">Welcome Back to Planet Zi.</h2>
+          <h2 id="about-title" data-i18n="about.title">Welcome Back to Planet Zi.</h2>
           <div class="project-intro">
-            <p>A weapons experiment sends Planet Zi’s eras crashing together, drawing Van, Bit, Prince Athle and Zan into the same world. Now young pilot Zeru and his companion Juno must uncover what happened and find a way to put it right. Recruit familiar faces, build and customize your Zoids™, and battle to restore the world and bring its warriors home.</p>
-            <p>Zoids™ Legacy: RE:TRANSLATION revisits Zeru and Juno’s journey with a fresh English script drawn from the Japanese original. Familiar anime voices guide the dialogue, while clearer menus and more readable text bring the adventure back to the Game Boy Advance™ screen.</p>
+            <p data-i18n="about.story">A weapons experiment sends Planet Zi’s eras crashing together, drawing Van, Bit, Prince Athle and Zan into the same world. Now young pilot Zeru and his companion Juno must uncover what happened and find a way to put it right. Recruit familiar faces, build and customize your Zoids™, and battle to restore the world and bring its warriors home.</p>
+            <p data-i18n="about.retranslation">Zoids™ Legacy: RE:TRANSLATION revisits Zeru and Juno’s journey with a fresh English script drawn from the Japanese original. Familiar anime voices guide the dialogue, while clearer menus and more readable text bring the adventure back to the Game Boy Advance™ screen.</p>
           </div>
           <div class="panel-markings markings-factions" aria-hidden="true">
             <svg data-ink="index" data-decal="story-republic" class="decal decal-emblem decal-republic" viewBox="0 0 48 48">
@@ -395,32 +401,32 @@
         </section>
       </div>
 
-      <section class="project-section" aria-label="Retranslation features">
+      <section class="project-section" aria-label="Retranslation features" data-i18n-aria-label="feature.group">
         <!-- Native 240 × 160 mGBA captures: original USA release and the bundled patch.
              Story flags, party composition, and menu unlocks were matched in isolated emulator sessions. -->
         <div class="project-features">
           <article class="feature" data-frame="dialogue" aria-labelledby="feature-dialogue">
             <div class="game-shot">
               <div id="dialogue-before" class="game-panel" role="tabpanel" aria-labelledby="dialogue-before-tab" tabindex="0" hidden>
-                <img src="images/dialogue-before.png" width="240" height="160" decoding="async" alt="Regina’s original dialogue uses widely spaced letters: “Prince! We got unusual time-space vibes!”">
+                <img src="images/dialogue-before.png" width="240" height="160" decoding="async" alt="Regina’s original dialogue uses widely spaced letters: “Prince! We got unusual time-space vibes!”" data-i18n-alt="feature.dialogue.beforeAlt">
               </div>
               <div id="dialogue-after" class="game-panel" role="tabpanel" aria-labelledby="dialogue-after-tab" tabindex="0">
-                <img src="images/dialogue-after.png" width="240" height="160" decoding="async" alt="Regina’s revised dialogue uses proportional lettering: “Your Highness! I’m detecting an unusual space-time distortion!”">
+                <img src="images/dialogue-after.png" data-i18n-src="feature.dialogue.afterImage" width="240" height="160" decoding="async" alt="Regina’s revised dialogue uses proportional lettering: “Your Highness! I’m detecting an unusual space-time distortion!”" data-i18n-alt="feature.dialogue.afterAlt">
               </div>
             </div>
             <div class="feature-info">
               <div class="feature-copy">
-                <h3 id="feature-dialogue">Made for the small screen</h3>
-                <p>Proportional lettering and new line breaks give conversations a more natural flow. Menu labels fit their windows, and neatly aligned stats make your next equipment check easier.</p>
+                <h3 id="feature-dialogue" data-i18n="feature.dialogue.title">Made for the small screen</h3>
+                <p data-i18n="feature.dialogue.copy">Proportional lettering and new line breaks give conversations a more natural flow. Menu labels fit their windows, and neatly aligned stats make your next equipment check easier.</p>
               </div>
-              <div class="edition-tabs" role="tablist" aria-label="Made for the small screen: before and after">
+              <div class="edition-tabs" role="tablist" aria-label="Made for the small screen: before and after" data-i18n-aria-label="feature.dialogue.aria">
                 <button id="dialogue-before-tab" class="edition-tab" type="button" role="tab" aria-selected="false" aria-controls="dialogue-before" tabindex="-1">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>ORIGINAL</span>
+                  <span data-i18n="feature.original">ORIGINAL</span>
                 </button>
                 <button id="dialogue-after-tab" class="edition-tab" type="button" role="tab" aria-selected="true" aria-controls="dialogue-after" tabindex="0">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>RE:TRANSLATION</span>
+                  <span data-i18n="brand.edition">RE:TRANSLATION</span>
                 </button>
               </div>
             </div>
@@ -433,25 +439,25 @@
           <article class="feature" data-frame="names" aria-labelledby="feature-names">
             <div class="game-shot">
               <div id="names-before" class="game-panel" role="tabpanel" aria-labelledby="names-before-tab" tabindex="0" hidden>
-                <img src="images/names-before.png" width="240" height="160" decoding="async" alt="The original pilot roster lists Zeru, Ballad and Jimmy.">
+                <img src="images/names-before.png" width="240" height="160" decoding="async" alt="The original pilot roster lists Zeru, Ballad and Jimmy." data-i18n-alt="feature.names.beforeAlt">
               </div>
               <div id="names-after" class="game-panel" role="tabpanel" aria-labelledby="names-after-tab" tabindex="0">
-                <img src="images/names-after.png" width="240" height="160" decoding="async" alt="The same pilot roster now lists Zeru, Brad and Jamie.">
+                <img src="images/names-after.png" data-i18n-src="feature.names.afterImage" width="240" height="160" decoding="async" alt="The same pilot roster now lists Zeru, Brad and Jamie." data-i18n-alt="feature.names.afterAlt">
               </div>
             </div>
             <div class="feature-info">
               <div class="feature-copy">
-                <h3 id="feature-names">Names you know</h3>
-                <p>Brad and Jamie return under their anime names. Character labels and dialogue follow the same naming choices, from the first introduction to the pilot roster.</p>
+                <h3 id="feature-names" data-i18n="feature.names.title">Names you know</h3>
+                <p data-i18n="feature.names.copy">Brad and Jamie return under their anime names. Character labels and dialogue follow the same naming choices, from the first introduction to the pilot roster.</p>
               </div>
-              <div class="edition-tabs" role="tablist" aria-label="Names you know: before and after">
+              <div class="edition-tabs" role="tablist" aria-label="Names you know: before and after" data-i18n-aria-label="feature.names.aria">
                 <button id="names-before-tab" class="edition-tab" type="button" role="tab" aria-selected="false" aria-controls="names-before" tabindex="-1">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>ORIGINAL</span>
+                  <span data-i18n="feature.original">ORIGINAL</span>
                 </button>
                 <button id="names-after-tab" class="edition-tab" type="button" role="tab" aria-selected="true" aria-controls="names-after" tabindex="0">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>RE:TRANSLATION</span>
+                  <span data-i18n="brand.edition">RE:TRANSLATION</span>
                 </button>
               </div>
             </div>
@@ -463,25 +469,25 @@
           <article class="feature" data-frame="commands" aria-labelledby="feature-commands">
             <div class="game-shot">
               <div id="commands-before" class="game-panel" role="tabpanel" aria-labelledby="commands-before-tab" tabindex="0" hidden>
-                <img src="images/commands-before.png" width="240" height="160" decoding="async" alt="The original Parts Removal description begins “When a pilot with Strat.Commd 2 skill, has a post in the troop” and continues beyond the window.">
+                <img src="images/commands-before.png" width="240" height="160" decoding="async" alt="The original Parts Removal description begins “When a pilot with Strat.Commd 2 skill, has a post in the troop” and continues beyond the window." data-i18n-alt="feature.commands.beforeAlt">
               </div>
               <div id="commands-after" class="game-panel" role="tabpanel" aria-labelledby="commands-after-tab" tabindex="0">
-                <img src="images/commands-after.png" width="240" height="160" decoding="async" alt="Parts Removal’s revised description fits in one window: removes all weapon rack equipment from the selected ally Zoid; requires a pilot with Tactics 2.">
+                <img src="images/commands-after.png" data-i18n-src="feature.commands.afterImage" width="240" height="160" decoding="async" alt="Parts Removal’s revised description fits in one window: removes all weapon rack equipment from the selected ally Zoid; requires a pilot with Tactics 2." data-i18n-alt="feature.commands.afterAlt">
               </div>
             </div>
             <div class="feature-info">
               <div class="feature-copy">
-                <h3 id="feature-commands">Know your next move</h3>
-                <p>Check a Deck Command’s pilot requirements before committing a turn. Revised battle descriptions explain its effects, and skill names make a pilot’s strengths and weaknesses easier to spot.</p>
+                <h3 id="feature-commands" data-i18n="feature.commands.title">Know your next move</h3>
+                <p data-i18n="feature.commands.copy">Check a Deck Command’s pilot requirements before committing a turn. Revised battle descriptions explain its effects, and skill names make a pilot’s strengths and weaknesses easier to spot.</p>
               </div>
-              <div class="edition-tabs" role="tablist" aria-label="Know your next move: before and after">
+              <div class="edition-tabs" role="tablist" aria-label="Know your next move: before and after" data-i18n-aria-label="feature.commands.aria">
                 <button id="commands-before-tab" class="edition-tab" type="button" role="tab" aria-selected="false" aria-controls="commands-before" tabindex="-1">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>ORIGINAL</span>
+                  <span data-i18n="feature.original">ORIGINAL</span>
                 </button>
                 <button id="commands-after-tab" class="edition-tab" type="button" role="tab" aria-selected="true" aria-controls="commands-after" tabindex="0">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>RE:TRANSLATION</span>
+                  <span data-i18n="brand.edition">RE:TRANSLATION</span>
                 </button>
               </div>
             </div>
@@ -492,25 +498,25 @@
           <article class="feature" data-frame="cast" aria-labelledby="feature-cast">
             <div class="game-shot">
               <div id="cast-before" class="game-panel" role="tabpanel" aria-labelledby="cast-before-tab" tabindex="0" hidden>
-                <img src="images/cast-before.png" width="240" height="160" decoding="async" alt="Harry declares, “I am Harry Champ. I was born to be a champion,” in the original release.">
+                <img src="images/cast-before.png" width="240" height="160" decoding="async" alt="Harry declares, “I am Harry Champ. I was born to be a champion,” in the original release." data-i18n-alt="feature.cast.beforeAlt">
               </div>
               <div id="cast-after" class="game-panel" role="tabpanel" aria-labelledby="cast-after-tab" tabindex="0">
-                <img src="images/cast-after.png" width="240" height="160" decoding="async" alt="Harry declares, “My name is Harry Champ. I’m a man destined to be king!” in the retranslation.">
+                <img src="images/cast-after.png" data-i18n-src="feature.cast.afterImage" width="240" height="160" decoding="async" alt="Harry declares, “My name is Harry Champ. I’m a man destined to be king!” in the retranslation." data-i18n-alt="feature.cast.afterAlt">
               </div>
             </div>
             <div class="feature-info">
               <div class="feature-copy">
-                <h3 id="feature-cast">A cast with character</h3>
-                <p>Harry gets to be theatrical, and Brad gets his dry wit back. Dialogue draws on the cast’s anime voices, including familiar dub lines in scenes adapted from the show.</p>
+                <h3 id="feature-cast" data-i18n="feature.cast.title">A cast with character</h3>
+                <p data-i18n="feature.cast.copy">Harry gets to be theatrical, and Brad gets his dry wit back. Dialogue draws on the cast’s anime voices, including familiar dub lines in scenes adapted from the show.</p>
               </div>
-              <div class="edition-tabs" role="tablist" aria-label="A cast with character: before and after">
+              <div class="edition-tabs" role="tablist" aria-label="A cast with character: before and after" data-i18n-aria-label="feature.cast.aria">
                 <button id="cast-before-tab" class="edition-tab" type="button" role="tab" aria-selected="false" aria-controls="cast-before" tabindex="-1">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>ORIGINAL</span>
+                  <span data-i18n="feature.original">ORIGINAL</span>
                 </button>
                 <button id="cast-after-tab" class="edition-tab" type="button" role="tab" aria-selected="true" aria-controls="cast-after" tabindex="0">
                   <span class="tab-shape flicker-unit" aria-hidden="true"></span>
-                  <span>RE:TRANSLATION</span>
+                  <span data-i18n="brand.edition">RE:TRANSLATION</span>
                 </button>
               </div>
             </div>
@@ -524,14 +530,14 @@
     </main>
 
     <footer>
-      <p class="project-credit">Decompilation, English retranslation &amp; web patcher by <a href="https://github.com/jmacato" target="_blank" rel="noopener noreferrer">Jumar Macato</a> (© 2026).</p>
+      <p class="project-credit"><span data-i18n="footer.creditBefore">Decompilation, English retranslation &amp; web patcher by</span> <a href="https://github.com/jmacato" target="_blank" rel="noopener noreferrer">Jumar Macato</a> <span data-i18n="footer.creditAfter">(© 2026).</span></p>
       <!-- Current notices: https://www.takaratomy-arts.co.jp/items/item.html?n=Y097362
            Original anime: https://www.takaratomy.co.jp/release/product/2025/15508.html -->
-      <p>ZOIDS™ © TOMY. Original ZOIDS™ anime © TOMY · © ShoPro. ZOIDS™ is a trademark of <a href="https://www.takaratomy.co.jp/products/zoidsofficial/" target="_blank" rel="noopener noreferrer">TOMY Company, Ltd. (Takara Tomy)</a>.</p>
+      <p><span data-i18n="footer.zoidsBefore">ZOIDS™ © TOMY. Original ZOIDS™ anime © TOMY · © ShoPro. ZOIDS™ is a trademark of</span> <a href="https://www.takaratomy.co.jp/products/zoidsofficial/" target="_blank" rel="noopener noreferrer">TOMY Company, Ltd. (Takara Tomy)</a><span data-i18n="footer.zoidsAfter">.</span></p>
       <!-- Original game notices: USA ROM copyright table at 0x7A0F28, identified by tools/dialogue.py. -->
-      <p class="game-copyright">Original 2004 game credits: © 2004 Atari Interactive, Inc. · © 1983–2004 TOMY · © 1999–2001 SHO-PRO・MBS・JRK · © 2004 Hasbro. All rights reserved.</p>
-      <p>Nintendo® and Game Boy Advance™ are trademarks of Nintendo. Nintendo logos © Nintendo.</p>
-      <p>The original game was licensed by Nintendo®. This is an independent fan project.</p>
+      <p class="game-copyright" data-i18n="footer.gameCredits">Original 2004 game credits: © 2004 Atari Interactive, Inc. · © 1983–2004 TOMY · © 1999–2001 SHO-PRO・MBS・JRK · © 2004 Hasbro. All rights reserved.</p>
+      <p data-i18n="footer.nintendo">Nintendo® and Game Boy Advance™ are trademarks of Nintendo. Nintendo logos © Nintendo.</p>
+      <p data-i18n="footer.fanProject">The original game was licensed by Nintendo®. This is an independent fan project.</p>
     </footer>
   </div>
 </body>

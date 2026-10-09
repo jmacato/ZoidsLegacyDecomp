@@ -19,6 +19,12 @@ ROM_SIZE = 0x800000
 BASE = 0x08000000
 EVENT_JUMP = 0x0A
 TOKEN = re.compile(r"\{([0-9A-Fa-f]{2}(?: [0-9A-Fa-f]{2})*)\}")
+SPANISH_CODES = {char: 0x9F40 + index for index, char in
+                 enumerate('áéíóúüñÁÉÍÓÚÜÑ¿¡')}
+SPANISH_COMPACT_CODES = {char: 0xE0 + index for index, char in
+                         enumerate('áéíóúüñÁÉÍÓÚÜÑ¿¡')}
+SPANISH_CHARACTERS = {code: char for codes in (SPANISH_CODES, SPANISH_COMPACT_CODES)
+                      for char, code in codes.items()}
 MENU_LENGTHS = {1: 7, 2: 2, 3: 2, 4: 1, 6: 2, 7: 3, 8: 2,
                 10: 2, 11: 3, 12: 1, 13: 4}
 MENU_WINDOW_EDITS = {
@@ -94,6 +100,9 @@ def readable(unit: bytes) -> str:
 def _readable(unit: bytes) -> str:
     if unit in (b"@", COPYRIGHT_CODE.to_bytes(2, "big")):
         return "©"
+    code = int.from_bytes(unit, 'big')
+    if code in SPANISH_CHARACTERS:
+        return SPANISH_CHARACTERS[code]
     if unit == b"\x0a":
         return "\n"
     if unit[0] < 0x20:
@@ -202,9 +211,14 @@ def encode_text(text: str, original: bytes | None = None,
                 result.extend(b"@" if raw_ascii else COPYRIGHT_CODE.to_bytes(2, "big"))
             elif char == " ":
                 result.extend(b"\x20" if raw_ascii else b"\x81\x40")
+            elif char == '-':
+                result.extend(b'-' if raw_ascii else b'\x81\x7c')
             elif "!" <= char <= "~" and char not in "{}":
                 result.extend(bytes((ord(char),)) if raw_ascii else
                               chr(ord(char) + 0xFEE0).encode("shift_jis"))
+            elif char in SPANISH_CODES:
+                code = SPANISH_COMPACT_CODES[char] if raw_ascii else SPANISH_CODES[char]
+                result.extend(code.to_bytes(1 if raw_ascii else 2, 'big'))
             elif ord(char) >= 0x80:
                 result.extend(char.encode("shift_jis"))
             else:
@@ -574,7 +588,7 @@ def load_dialogue(path: Path, rom_path: Path) -> dict:
         if "original" not in entry or "text" not in entry:
             raise ValueError(f"No ROM text at {edit['offset']}.")
         entries.append(entry)
-    return {"entries": entries}
+    return {**document, "entries": entries}
 
 
 def load_scenes(path: Path, rom_path: Path) -> dict:

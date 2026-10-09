@@ -27778,6 +27778,14 @@
    "text": "Multiplayer"
   },
   {
+   "offset": "0x103A70",
+   "text": "Transfer"
+  },
+  {
+   "offset": "0x103A84",
+   "text": "Database"
+  },
+  {
    "offset": "0x103A98",
    "text": "Options"
   },
