@@ -1,7 +1,7 @@
 # Zoids Legacy (USA) decompilation
 
-This repository contains 1,130 byte-exact code regions from the game.
-They cover all 1,205 inventoried callable owners and their 371,784 code bytes.
+This repository contains 1,155 byte-exact code regions from the game.
+They cover all 1,238 inventoried callable owners and their 373,728 code bytes.
 The source includes C, inline assembly, assembler macros, and assembly files.
 It does not contain a ROM, game data, generated ROMs, saves, or binary probes.
 
@@ -46,6 +46,26 @@ Eleven routines from the hand-written half of the MP2K sound driver use instruct
     python3 tools/nonmatching.py --rom /path/to/rom [--entry m4a_ply_note] [--diff]
 
 The tool compiles each entry at its original address and reports how many instructions match the ROM. `--diff` prints the instruction diff.
+
+## Copied native code and sound mixer
+
+The remaining-code audit added eight matching Thumb C routines, fourteen ARM assembly routines, eleven register branch stubs, and the startup restart branch.
+The ARM sources keep the original CPU mode and register conventions; agbcc remains unchanged.
+
+[`src/audio/m4a_sound_mixer.s`](src/audio/m4a_sound_mixer.s) contains the mixer continuation at `080EAB28`–`080EAE52` and its shared `bx r3` return at `080EAE52`.
+`InitializeSoundEngine` copies 896 bytes from `080EAB28` to `03007758`; this includes the mixer and following routines.
+`SoundMain` enters at `03007759`, with the Thumb bit set.
+The mixer switches to ARM for reverb and PCM mixing, then returns to Thumb for channel control and register restoration.
+It clears or applies reverb to the output buffer, updates channel envelopes, and mixes direct or interpolated PCM samples.
+Looping channels restart at their sample loop point; finished channels stop.
+
+This entry uses SoundMain's stack frame rather than an ordinary C call.
+On entry, `r5` holds the output buffer, `r8` holds the sample count, and `r6` holds `0x630`.
+Stack offsets `0` and `4` hold sample and channel counts; `8` holds the output buffer.
+Offsets `12` and `16` hold the loop pointer and remaining loop samples; `20` holds the scanline deadline.
+Offset `24` holds the engine pointer, followed by saved `r8`–`r11`, `r4`–`r7`, and the return address.
+The signature load uses the existing literal at `080EAE54`, beyond the shared return instruction.
+The extracted assembly preserves these offsets and mode switches; the mixer has no C replacement.
 
 ## Build the translated ROM
 

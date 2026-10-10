@@ -20,6 +20,26 @@
   "exec": true
  },
  {
+  "entry": "080000F0",
+  "mode": "arm",
+  "kind": "block",
+  "nblocks": 1,
+  "lo": "080000F0",
+  "hi": "080000F4",
+  "tier": "X",
+  "exec": false
+ },
+ {
+  "entry": "08000104",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 18,
+  "lo": "08000104",
+  "hi": "0800024C",
+  "tier": "B",
+  "exec": true
+ },
+ {
   "entry": "0800024C",
   "mode": "arm",
   "kind": "block",
@@ -28,6 +48,136 @@
   "hi": "080003BC",
   "tier": "X",
   "exec": true
+ },
+ {
+  "entry": "080003E0",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 4,
+  "lo": "080003E0",
+  "hi": "080004C8",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080004C8",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 4,
+  "lo": "080004C8",
+  "hi": "08000520",
+  "tier": "B",
+  "exec": true
+ },
+ {
+  "entry": "08000520",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 5,
+  "lo": "08000520",
+  "hi": "080005AC",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080005AC",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080005AC",
+  "hi": "080005E0",
+  "tier": "B",
+  "exec": true
+ },
+ {
+  "entry": "080005E0",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080005E0",
+  "hi": "080005F8",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080005F8",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080005F8",
+  "hi": "08000638",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "08000638",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 2,
+  "lo": "08000638",
+  "hi": "080006A8",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080006A8",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 2,
+  "lo": "080006A8",
+  "hi": "08000700",
+  "tier": "B",
+  "exec": true
+ },
+ {
+  "entry": "08000700",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 4,
+  "lo": "08000700",
+  "hi": "080007A4",
+  "tier": "B",
+  "exec": true
+ },
+ {
+  "entry": "080007A4",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 4,
+  "lo": "080007A4",
+  "hi": "08000844",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "08000844",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 2,
+  "lo": "08000844",
+  "hi": "08000894",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "08000894",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 2,
+  "lo": "08000894",
+  "hi": "080008E4",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080008E4",
+  "mode": "arm",
+  "kind": "indirect_target",
+  "nblocks": 2,
+  "lo": "080008E4",
+  "hi": "08000934",
+  "tier": "B",
+  "exec": false
  },
  {
   "entry": "080920EC",
@@ -250,6 +400,16 @@
   "exec": false
  },
  {
+  "entry": "0809298C",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "0809298C",
+  "hi": "080929B0",
+  "tier": "B",
+  "exec": false
+ },
+ {
   "entry": "080929B0",
   "mode": "thumb",
   "kind": "indirect_target",
@@ -298,6 +458,16 @@
   "hi": "08092AF4",
   "tier": "A",
   "exec": true
+ },
+ {
+  "entry": "08092AF4",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "08092AF4",
+  "hi": "08092B04",
+  "tier": "B",
+  "exec": false
  },
  {
   "entry": "08092B04",
@@ -1238,6 +1408,16 @@
   "hi": "08095330",
   "tier": "A",
   "exec": true
+ },
+ {
+  "entry": "08095330",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "08095330",
+  "hi": "0809534C",
+  "tier": "B",
+  "exec": false
  },
  {
   "entry": "0809534C",
@@ -5018,6 +5198,16 @@
   "hi": "080BA86C",
   "tier": "X",
   "exec": true
+ },
+ {
+  "entry": "080BA86C",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080BA86C",
+  "hi": "080BA878",
+  "tier": "B",
+  "exec": false
  },
  {
   "entry": "080BA878",
@@ -10880,6 +11070,16 @@
   "exec": true
  },
  {
+  "entry": "080EAB28",
+  "mode": "thumb",
+  "kind": "block",
+  "nblocks": 71,
+  "lo": "080EAB28",
+  "hi": "080EAE52",
+  "tier": "X",
+  "exec": true
+ },
+ {
   "entry": "080EAE52",
   "mode": "thumb",
   "kind": "call_target",
@@ -11350,6 +11550,26 @@
   "exec": false
  },
  {
+  "entry": "080EB8FC",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 3,
+  "lo": "080EB8FC",
+  "hi": "080EB91C",
+  "tier": "B",
+  "exec": false
+ },
+ {
+  "entry": "080EB91C",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 3,
+  "lo": "080EB91C",
+  "hi": "080EB944",
+  "tier": "B",
+  "exec": false
+ },
+ {
   "entry": "080EB944",
   "mode": "thumb",
   "kind": "call_target",
@@ -11750,6 +11970,16 @@
   "exec": false
  },
  {
+  "entry": "080ECB78",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080ECB78",
+  "hi": "080ECB7C",
+  "tier": "B",
+  "exec": false
+ },
+ {
   "entry": "080ECB7C",
   "mode": "thumb",
   "kind": "indirect_target",
@@ -11920,6 +12150,116 @@
   "exec": true
  },
  {
+  "entry": "080ECD6C",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD6C",
+  "hi": "080ECD70",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD70",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD70",
+  "hi": "080ECD74",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD74",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD74",
+  "hi": "080ECD78",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD78",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD78",
+  "hi": "080ECD7C",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD7C",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD7C",
+  "hi": "080ECD80",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD80",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD80",
+  "hi": "080ECD84",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD84",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD84",
+  "hi": "080ECD88",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD88",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD88",
+  "hi": "080ECD8C",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD8C",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD8C",
+  "hi": "080ECD90",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD90",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD90",
+  "hi": "080ECD94",
+  "tier": "A",
+  "exec": false
+ },
+ {
+  "entry": "080ECD94",
+  "mode": "thumb",
+  "kind": "call_target",
+  "nblocks": 1,
+  "lo": "080ECD94",
+  "hi": "080ECD98",
+  "tier": "A",
+  "exec": false
+ },
+ {
   "entry": "080ECD98",
   "mode": "thumb",
   "kind": "call_target",
@@ -12028,6 +12368,16 @@
   "hi": "080ED0A4",
   "tier": "A",
   "exec": true
+ },
+ {
+  "entry": "080ED0A4",
+  "mode": "thumb",
+  "kind": "indirect_target",
+  "nblocks": 1,
+  "lo": "080ED0A4",
+  "hi": "080ED0CC",
+  "tier": "B",
+  "exec": false
  },
  {
   "entry": "080ED0CC",

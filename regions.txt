@@ -1149,3 +1149,30 @@ sub_080E8C90     0xE8C90  0xE90AC  battle/build_battle_equipment_stats.c
 sub_080E705C     0xE705C  0xE74F0  zoids/update_pilot_abilities.c
 sub_080D0644     0xD0644  0xD0AE4  battle/update_zoid_equipment_animation.c
 sub_080B2EF0     0xB2EF0  0xB339C  ui/select_battle_replacement_player_zoid.c
+
+# Native code found outside the original inventory.
+rom_restart                        0xF0  0xF4  runtime/rom_restart.s
+rom_irq_handler                    0x104  0x24C  runtime/rom_irq_handler.s
+multiply_fixed12                   0x3E0  0x4C8  engine/multiply_fixed12.s
+run_hblank_callbacks               0x4C8  0x520  graphics/run_hblank_callbacks.s
+run_scanline_event                 0x520  0x5AC  graphics/run_scanline_event.s
+next_engine_random                 0x5AC  0x5E0  engine/next_engine_random.s
+swap_stack                         0x5E0  0x5F8  runtime/swap_stack.s
+swap_serial_receive_buffers        0x5F8  0x638  engine/swap_serial_receive_buffers.s
+perspective_scanline_callback      0x638  0x6A8  graphics/perspective_scanline_callback.s
+window_scanline_callback           0x6A8  0x700  graphics/window_scanline_callback.s
+transition_scanline_callback       0x700  0x7A4  graphics/transition_scanline_callback.s
+battle_mask_scanline_callback      0x7A4  0x844  graphics/battle_mask_scanline_callback.s
+bg0_scroll_scanline_callback       0x844  0x894  graphics/bg0_scroll_scanline_callback.s
+bg1_scroll_scanline_callback       0x894  0x8E4  graphics/bg1_scroll_scanline_callback.s
+mosaic_scanline_callback           0x8E4  0x934  graphics/mosaic_scanline_callback.s
+run_deferred_dma_copy              0x9298C  0x929B0  engine/run_deferred_dma_copy.c
+multiply_fixed8                    0x92AF4  0x92B04  engine/multiply_fixed8.c
+reset_scanline_window_state        0x95330  0x9534C  graphics/reset_scanline_window_state.c
+reset_scene_scanline_mosaic        0xBA86C  0xBA878  graphics/reset_scene_scanline_mosaic.c
+m4a_sound_mixer                    0xEAB28  0xEAE54  audio/m4a_sound_mixer.s
+fade_out_and_pause_music_player    0xEB8FC  0xEB91C  audio/fade_out_and_pause_music_player.c pb
+fade_in_music_player               0xEB91C  0xEB944  audio/fade_in_music_player.c pb
+sound_engine_reserved_callback     0xECB78  0xECB7C  audio/sound_engine_reserved_callback.c
+call_function_registers            0xECD6C  0xECD98  runtime/call_function_registers.c
+next_libc_random                   0xED0A4  0xED0CC  engine/next_libc_random.c
