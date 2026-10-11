@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the translated ROM and write the site's BPS patch and version from VERSION."""
+"""Build the English and Spanish site patches and their versions."""
 
 import argparse
 import binascii
@@ -70,17 +70,26 @@ def main():
     parser.add_argument('--rom', type=Path, default=ROOT / 'Zoids Legacy (USA).gba')
     args = parser.parse_args()
     try:
-        version = insert_vwf.release_version()
         source = dialogue.read_rom(args.rom)
-        target = insert_vwf.build_rom(
-            source, dialogue.load_scenes(ROOT / 'scene-translation.json', args.rom),
-            json.loads((ROOT / 'kerning-choices.json').read_text()),
-            dialogue.load_dialogue(ROOT / 'dialogue-en.json', args.rom))
+        choices = json.loads((ROOT / 'kerning-choices.json').read_text())
+        versions = {}
+        patches = {}
+        for language, scenes, dialogue_file, version_file in (
+                ('en', 'scene-translation.json', 'dialogue-en.json', 'VERSION'),
+                ('es', 'scene-translation-es.json', 'dialogue-es.json', 'VERSION_ES')):
+            versions[language] = insert_vwf.release_version(ROOT / version_file)
+            target = insert_vwf.build_rom(
+                source, dialogue.load_scenes(ROOT / scenes, args.rom), choices,
+                insert_vwf.load_translation(ROOT / dialogue_file, args.rom), versions[language])
+            patches[language] = create_bps(source, target)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         parser.exit(1, f'Error: {error}\n')
-    (SITE / 'patch.bps').write_bytes(create_bps(source, target))
-    (SITE / 'version.mjs').write_text(f"export const PATCH_VERSION = '{version}';\n")
-    print(f'Wrote the version {version} patch to {SITE / "patch.bps"}.')
+    (SITE / 'patch.bps').write_bytes(patches['en'])
+    (SITE / 'patch-es.bps').write_bytes(patches['es'])
+    (SITE / 'version.mjs').write_text(
+        f"export const PATCH_VERSION_EN = '{versions['en']}';\n"
+        f"export const PATCH_VERSION_ES = '{versions['es']}';\n")
+    print(f'Wrote English v{versions["en"]} and Spanish v{versions["es"]} patches to {SITE}.')
 
 
 if __name__ == '__main__':

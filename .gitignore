@@ -7,3 +7,4 @@ __pycache__/
 *.o
 *.i
 *.sqlite
+build/
