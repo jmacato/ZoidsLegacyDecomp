@@ -611,8 +611,7 @@ def save(lang, offset, text, expected):
 def build(lang):
     *_, document, scenes = load_language(lang)
     choices = json.loads((ROOT / 'kerning-choices.json').read_text())
-    rom = insert_vwf.build_rom(clean_rom(), scenes, choices, document,
-                               insert_vwf.release_version(data_path(lang, 'version')))
+    rom = insert_vwf.build_rom(clean_rom(), scenes, choices, document)
     output = ROOT / 'build' / f'zoids-legacy-{lang}.gba'
     output.parent.mkdir(exist_ok=True)
     output.write_bytes(rom)

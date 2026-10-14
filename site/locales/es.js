@@ -1,4 +1,4 @@
-import { PATCH_VERSION_ES } from '../version.mjs';
+import { PATCH_VERSION } from '../version.mjs';
 
 export default {
   "about.retranslation": "Zoids™ Legacy: RE:TRANSLATION vuelve a contar el viaje de Zeru y Juno con un guion inglés basado en el original japonés. Los diálogos conservan el tono de los personajes del anime, y los menús y textos se leen mejor en la pantalla de Game Boy Advance™. La versión en español sigue en desarrollo.",
@@ -79,13 +79,13 @@ export default {
   "patch.complete": "Parche aplicado. La descarga está lista.",
   "patch.downloadAgain": "Descargar de nuevo",
   "patch.dropHint": "o arrastra aquí tu archivo .gba",
-  "patch.initialStatus": `Parche v${PATCH_VERSION_ES} · Elige tu ROM USA para comenzar.`,
+  "patch.initialStatus": `Parche v${PATCH_VERSION} · Elige tu ROM USA para comenzar.`,
   "patch.romAria": "Elige tu ROM USA de Zoids™ Legacy",
   "patch.selectRom": "Elegir ROM",
   "patch.start": "Elige tu ROM USA para comenzar.",
   "patch.title": "PARCHEADOR DE ROM",
   "patch.verified": "ROM verificada. Lista para aplicar el parche.",
-  "patch.version": `Parche v${PATCH_VERSION_ES}`,
+  "patch.version": `Parche v${PATCH_VERSION}`,
   "skip.rom": "Ir a la selección de ROM",
   "theme.darkAria": "Cambiar al modo oscuro",
   "theme.darkLabel": "MODO OSCURO",

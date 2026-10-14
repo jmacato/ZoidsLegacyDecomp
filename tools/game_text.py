@@ -10,8 +10,8 @@ import insert_vwf
 ROOT = Path(__file__).resolve().parent.parent
 ROM_PATH = ROOT / 'Zoids Legacy (USA).gba'
 LANGUAGES = {
-    'en': {'name': 'English', 'dialogue': 'dialogue-en.json', 'scenes': 'scene-translation.json', 'version': 'VERSION'},
-    'es': {'name': 'Español', 'dialogue': 'dialogue-es.json', 'scenes': 'scene-translation-es.json', 'version': 'VERSION_ES'},
+    'en': {'name': 'English', 'dialogue': 'dialogue-en.json', 'scenes': 'scene-translation.json'},
+    'es': {'name': 'Español', 'dialogue': 'dialogue-es.json', 'scenes': 'scene-translation-es.json'},
 }
 
 
@@ -45,7 +45,7 @@ def rom_entries():
 
 
 def expand(lang, text):
-    return text.replace('{VERSION}', insert_vwf.release_version(data_path(lang, 'version')))
+    return text.replace('{VERSION}', insert_vwf.release_version())
 
 
 def translation(entry):
