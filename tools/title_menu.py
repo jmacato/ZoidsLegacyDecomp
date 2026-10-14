@@ -23,6 +23,33 @@ GLYPHS = {
     'U': '5555557',
     'V': '5555552',
 }
+VERSION_GRAPHICS_AREA = 0xB82000
+VERSION_FRAMES_AREA = 0xB82500
+COPYRIGHT_GRAPHICS = 0x102C78
+COPYRIGHT_GRAPHICS_POINTER = 0x9B804
+COPYRIGHT_FRAMES = 0x102E54
+COPYRIGHT_FRAMES_POINTER = 0x102ED0
+# A, H, P, and T match the copyright strip's original glyphs.
+VERSION_GLYPHS = {
+    ' ': (0, 0, 0, 0, 0, 0, 0),
+    'A': (6, 9, 9, 15, 9, 9, 9),
+    'C': (6, 9, 8, 8, 8, 9, 6),
+    'H': (9, 9, 9, 15, 9, 9, 9),
+    'P': (14, 9, 9, 14, 8, 8, 8),
+    'T': (31, 4, 4, 4, 4, 4, 4),
+    'V': (17, 17, 17, 17, 10, 10, 4),
+    '0': (6, 9, 9, 9, 9, 9, 6),
+    '1': (2, 6, 2, 2, 2, 2, 7),
+    '2': (6, 9, 1, 2, 4, 8, 15),
+    '3': (14, 1, 1, 6, 1, 1, 14),
+    '4': (2, 6, 10, 10, 15, 2, 2),
+    '5': (15, 8, 8, 14, 1, 1, 14),
+    '6': (6, 8, 8, 14, 9, 9, 6),
+    '7': (15, 1, 1, 2, 4, 4, 4),
+    '8': (6, 9, 9, 6, 9, 9, 6),
+    '9': (6, 9, 9, 7, 1, 1, 6),
+    '.': (0, 0, 0, 0, 0, 0, 1),
+}
 PRESS_START_AREA = 0xB81000
 PRESS_START_GRAPHICS = 0x102B3C
 PRESS_START_GLYPHS = {
@@ -77,6 +104,67 @@ def write_graphics(rom, tiles, area, pointer):
         raise ValueError('Title menu graphics overlap existing data.')
     rom[area:area + len(packed)] = packed
     struct.pack_into('<I', rom, pointer, 0x08000000 + area)
+
+
+def patch_version(rom, version):
+    for pointer, expected in ((COPYRIGHT_GRAPHICS_POINTER, COPYRIGHT_GRAPHICS),
+                              (COPYRIGHT_FRAMES_POINTER, COPYRIGHT_FRAMES)):
+        if struct.unpack_from('<I', rom, pointer)[0] != 0x08000000 + expected:
+            raise ValueError('Unexpected title copyright pointer.')
+    tiles = decompress(rom, COPYRIGHT_GRAPHICS)
+    if len(tiles) != 22 * 32:
+        raise ValueError('Unexpected title copyright graphics size.')
+    pixels = render_version(version)
+    columns = [x for x in range(56) if any(row[x] for row in pixels)]
+    version_width = columns[-1] - columns[0] + 1
+    # Native copyright ink spans x=-87 through x=87 relative to the sprite anchor.
+    left = -((175 + 8 + version_width) // 2)
+    version_x = left + 175 + 8 - columns[0]
+    for column in range(7):
+        for y in range(8):
+            for x in range(0, 8, 2):
+                tiles.append(pixels[y][column * 8 + x] |
+                             pixels[y][column * 8 + x + 1] << 4)
+    frames = bytearray(rom[COPYRIGHT_FRAMES:COPYRIGHT_FRAMES_POINTER])
+    if len(frames) != 6 * 20 + 4 or frames[-4:] != b'\xff\xff\0\0':
+        raise ValueError('Unexpected title copyright frame layout.')
+    for offset in range(0, 6 * 20, 20):
+        x = struct.unpack_from('<h', frames, offset + 4)[0]
+        struct.pack_into('<h', frames, offset + 4, x + left + 87)
+    del frames[-4:]
+    # The copyright uses 22 tiles. Seven more fit before the menu graphics at tile 0x37D.
+    for tile, x, width in ((22, version_x, 32), (26, version_x + 32, 16),
+                          (28, version_x + 48, 8)):
+        piece = bytearray(frames[:20])
+        struct.pack_into('<IhhH', piece, 0, tile, x, -4, width)
+        frames.extend(piece)
+    frames.extend(b'\xff\xff\0\0')
+    end = VERSION_FRAMES_AREA + len(frames)
+    if end > len(rom) or any(value != 255 for value in rom[VERSION_FRAMES_AREA:end]):
+        raise ValueError('Title version frames overlap existing data.')
+    write_graphics(rom, tiles, VERSION_GRAPHICS_AREA, COPYRIGHT_GRAPHICS_POINTER)
+    rom[VERSION_FRAMES_AREA:end] = frames
+    struct.pack_into('<I', rom, COPYRIGHT_FRAMES_POINTER, 0x08000000 + VERSION_FRAMES_AREA)
+
+
+def render_version(version):
+    text = f'V{version}'
+    if set(text) - VERSION_GLYPHS.keys():
+        raise ValueError('Title version uses unsupported glyphs.')
+    widths = [max(VERSION_GLYPHS[char]).bit_length() if char != ' ' else 2 for char in text]
+    width = sum(widths) + len(text) - 1
+    if width > 56:
+        raise ValueError('Title version does not fit its 56-pixel area.')
+    pixels = [[0] * 56 for _ in range(8)]
+    left = 56 - width
+    for char, glyph_width in zip(text, widths):
+        for y, row in enumerate(VERSION_GLYPHS[char]):
+            for x in range(glyph_width):
+                if row & (1 << (glyph_width - x - 1)):
+                    pixels[y + 1][left + x] = 4
+                    pixels[y][left + x] = 1
+        left += glyph_width + 1
+    return pixels
 
 
 def patch_press_start(rom, label):

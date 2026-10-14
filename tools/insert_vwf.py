@@ -811,6 +811,7 @@ def build_rom(original, document, choices, dialogue_document, version=None):
         '<10H4x2I', 0x4640, 0x4629, 0xAA09, 0x4B04, 0x469E, 0x4B04, 0x4718, 0x4680,
         0x7802, 0xE016, CREDITS_RESUME, symbols['credits_line'] | 1)
     title_menu.patch(rom, title_labels)
+    title_menu.patch_version(rom, version)
     return bytes(rom)
 
 
