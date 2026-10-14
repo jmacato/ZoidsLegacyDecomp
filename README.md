@@ -1,18 +1,79 @@
 # Zoids Legacy (USA) decompilation
 
-This repository contains 1,130 code regions that match the original game byte for byte. These regions cover all 1,205 callable owners in the inventory, with 371,784 bytes of code.
+This project rebuilds 1,130 code regions from Zoids Legacy to match the original game byte for byte. It also includes tools for English and Spanish translations. See [the source guide](src/README.md) for the code layout.
 
-The source includes C, inline assembly, assembler macros, and assembly files. The repository does not include a ROM, game data, generated ROMs, saves, or binary probes.
+You need your own clean USA ROM. The repository does not include the ROM or its original game text.
 
-> Some functions are hard to read. They use code from permutators, macros for functions, arguments, and registers, and rough AI-generated code. I plan to clean them up when I have more free time.
+Some functions are still hard to read because they use generated code and macros. Further cleanup is planned.
 
-## Requirements
+## Build a translated ROM
 
-Install Python 3, a C preprocessor, ARM binutils, and agbcc. Use commit `da598c1d918402c42c0c0d7128ba14567f3175e9` from [pret/agbcc](https://github.com/pret/agbcc). Build the normal agbcc compiler with GCC 14.
+Install Python 3, a C compiler (`cc`), and the ARM GNU toolchain (`arm-none-eabi-gcc`, `-as`, `-objcopy`, `-nm`). Put `Zoids Legacy (USA).gba` in the repository root. Run:
 
-The Apple Clang build fails on one source file.
+    python3 tools/insert_vwf.py --output "Zoids Legacy (USA) - Retranslated.gba"
 
-From the agbcc checkout, run these commands in order:
+The English text is in `dialogue-en.json` and `scene-translation.json`. Font spacing is in `kerning-choices.json`. The builder rejects unsupported characters and text that exceeds the limits for names, battle choices, battle quotes, and Deck Commands.
+
+## Edit translations
+
+Run `python3 tools/script_editor.py`. Open http://127.0.0.1:5097/. Select ENG or ESP. Use Translate interface to change the language of the editor controls.
+
+The editor shows each text record, its script context, and a preview drawn with the game's text core. Dialogue previews stop where the game waits for A. The editor checks text before saving it. Build ROM writes `build/zoids-legacy-<code>.gba`.
+
+To check for clipped text, run:
+
+    python3 tools/text_fit_check.py --language esp
+
+Use `eng` for English. The command writes `build/text-fit-<code>.json`, which the editor uses to mark clipped text.
+
+Exact results use resolved draw arguments and window sizes. Other results use estimates. The command fails if an exact result shows clipped text.
+
+## Build release patches
+
+Set the version in `VERSION`. Run `python3 tools/build_site_patch.py`.
+
+This creates `site/patch.bps`, `site/patch-es.bps`, and `site/version.mjs`. All languages share this version on the title screen, in the credits through `{VERSION}`, and on the website.
+
+## Add a language
+
+Use the English JSON files as examples. Create `scene-translation-<code>.json` and `dialogue-<code>.json`, where `<code>` is a short language code.
+
+Translate `english_draft` in scene entries and `build_text` or `text` in dialogue entries. Keep offsets, control codes, placeholders, and build settings unchanged.
+
+You can omit untranslated entries. They use the original USA text, except required message templates and credits, which use English translations.
+
+### Title menu
+
+Use the Spanish file's `title_menu` section as an example. Set `new_game`, `continue`, and `options`. Add `press_start` to translate the startup prompt.
+
+The builder draws uppercase labels and keeps the original layout, both Continue states, and the prompt's gradient and shadow. Labels allow 12 characters each, except Options, which allows 8. Without `title_menu`, the original labels remain.
+
+For unsupported title letters, add glyphs to `tools/title_menu.py`. For other text, add them to `tools/dialogue.py` and `tools/text_core.py`.
+
+### Build and website
+
+Build with your language files:
+
+    python3 tools/insert_vwf.py --rom "Zoids Legacy (USA).gba" \
+      --draft scene-translation-xx.json --dialogue dialogue-xx.json \
+      --output translated-xx.gba
+
+Replace `xx` with your language code. Every build reads the shared `VERSION` file.
+
+To add the language to the website:
+
+1. Add a file in `site/locales/` with the existing text keys.
+2. Import `PATCH_VERSION` from `../version.mjs` in that file.
+3. Add the language button and patch mapping in `site/index.html`, `site/i18n.js`, `site/app.js`, and `site/worker.js`.
+4. Add the patch build to `tools/build_site_patch.py`.
+5. Generate a BPS patch from the clean USA ROM and your translated ROM.
+6. Put the patch in `site/`.
+
+## Build and check the decompiled code
+
+Install Python 3, a C preprocessor, ARM binutils, and [agbcc](https://github.com/pret/agbcc). Use agbcc commit `da598c1d918402c42c0c0d7128ba14567f3175e9`.
+
+From the agbcc checkout, run:
 
     make -C gcc clean
     make -C gcc old
@@ -21,92 +82,22 @@ From the agbcc checkout, run these commands in order:
     make -C gcc CC=gcc-14
     cp gcc/agbcc agbcc
 
-Run one build at a time. The makefile has dependencies that fail with parallel builds.
+Use GCC 14 because the Apple Clang build fails on one source file. Run the builds one at a time because parallel builds fail. If agbcc is outside `../agbcc/`, set `AGBCC` and `OLD_AGBCC` to the compiler paths.
 
-If the compiler executables are outside `../agbcc/`, set `AGBCC` and `OLD_AGBCC` to their paths.
-
-## Check the source against the ROM
-
-Provide your own clean Zoids Legacy (USA) ROM. Run:
+From this repository, run:
 
     make verify ROM=/path/to/Zoids\ Legacy\ \(USA\).gba
 
-The tool checks the ROM's SHA-1 before it compiles any code. It compiles each listed region at its original address, then compares the result with the ROM. A full check also requires code for every callable span in the inventory. The tool creates temporary files and never writes a ROM.
+The tool checks the ROM's SHA-1, compiles each region, and compares its bytes with the ROM. It also checks that all callable spans have code. It uses temporary files and does not write a ROM.
 
 To check one region, run `python3 tools/verify.py --rom /path/to/rom --region region0`.
 
-## C code that does not match
+### C code that does not match
 
-Eleven hand-written routines in the MP2K sound driver use instructions and register conventions that agbcc cannot produce. The build keeps these routines as assembly to preserve the original bytes. The `src/audio/nonmatching/` directory contains equivalent C code for 10 routines. SoundMain has no C version because it passes a custom stack frame to the mixer code in IWRAM. The `nonmatching.txt` file lists each C file and its ROM span.
+Some hand-written sound routines need assembly to match the ROM. Their C versions are in `src/audio/nonmatching/`, with ROM spans listed in `nonmatching.txt`. SoundMain has no C version because its mixer uses a custom stack frame.
 
-To compare the C code with the ROM, run:
+To compare these routines with the ROM, run:
 
     python3 tools/nonmatching.py --rom /path/to/rom [--entry m4a_ply_note] [--diff]
 
-The tool compiles each entry at its original address and reports how many instructions match the ROM. The `--diff` flag shows the differences between instructions.
-
-## Build the translated ROM
-
-Put a clean `Zoids Legacy (USA).gba` in the repository root. Install Python 3, a host C compiler (`cc`), and the ARM GNU toolchain (`arm-none-eabi-gcc`, `-as`, `-objcopy`, `-nm`). Run:
-
-    python3 tools/insert_vwf.py --output "Zoids Legacy (USA) - Retranslated.gba"
-
-The English translation uses `dialogue-en.json` and `scene-translation.json`. These files contain translated text and build metadata. The `kerning-choices.json` file sets the font spacing. The tools read the original text and bytes from your ROM, so the repository does not include the original game text.
-
-The builder rejects characters that the font does not support. It also rejects speaker names, battle menu choices, and battle quotes that exceed their window size. Deck Command names must fit their menu line.
-
-### Build the release patches
-
-Set the patch version in `VERSION`. Run `python3 tools/build_site_patch.py`.
-
-The command writes `site/patch.bps`, `site/patch-es.bps`, and `site/version.mjs`. All languages use the same version from `VERSION`, including future languages. Each ROM shows this version on the title screen and uses it for the `{VERSION}` placeholder in the credits. The website uses the same version through `PATCH_VERSION` in `site/version.mjs`.
-
-## Edit and check the text
-
-Run `python3 tools/script_editor.py`. Open http://127.0.0.1:5097/. Select ENG or ESP to choose the language. Turn on Translate interface to use that language for the editor controls.
-
-The editor lists every text record from the ROM and shows the event or menu script that uses it. It draws previews with the game's text core. Dialogue previews stop at each point where the game waits for A. Long passages show one dialogue box at a time.
-
-The editor checks edits with the same rules as the builder before it saves them to the language's JSON files. Build ROM writes `build/zoids-legacy-<code>.gba`.
-
-To find text that exceeds its window size, run `python3 tools/text_fit_check.py --language esp`. Use `eng` for English.
-
-The check reads draw calls in `src/`. It gets each window size from the menu script or the `OpenWindow` call that opens it. The text core then lays out each string at that width. The check writes `build/text-fit-<code>.json`. The editor uses this file to mark clipped text and show previews.
-
-An exact result means that the check resolved every draw argument. Other results depend on an inferred window or position. The command exits with an error if an exact result shows clipped text.
-
-## Add another language
-
-### Translate the game text
-
-Create `scene-translation-<code>.json` and `dialogue-<code>.json`, with the English files as format examples. Replace `<code>` with a short language code. Translate `english_draft` in scene entries. Translate `build_text` or `text` in dialogue entries. Keep each offset, control code, placeholder, and build setting.
-
-You can include only the entries that you translate. Missing entries keep the text from the original USA ROM. Required message templates and credits use the English translation if your files omit them.
-
-### Translate the title menu
-
-The Spanish dialogue file uses `title_menu` to set labels for `new_game`, `continue`, and `options`. The builder draws these labels in uppercase with a small sprite font. It keeps both Continue states and the original menu layout. The optional `press_start` label replaces the startup prompt and keeps its gradient and shadow.
-
-Files without `title_menu`, including the English file, keep the original menu graphics. The shared version indicator still appears on the title screen. New Game, Continue, and Press Start labels allow 12 characters each. Options allows 8 characters.
-
-Before you use unsupported title letters, add them to `tools/title_menu.py`. For other text, add missing characters to `tools/dialogue.py` and `tools/text_core.py`.
-
-### Build the language ROM
-
-Build the ROM with your translation files:
-
-    python3 tools/insert_vwf.py --rom "Zoids Legacy (USA).gba" \
-      --draft scene-translation-xx.json --dialogue dialogue-xx.json \
-      --output translated-xx.gba
-
-Replace `xx` with the same language code in each file name.
-
-The builder reads the shared patch version from `VERSION`. No separate version file or command option is needed for another language.
-
-### Add the language to the website
-
-The website text uses stable keys in `site/index.html`. Each language has a file in `site/locales/`.
-
-Add a locale file for the language. Add its language button and patch mapping in `site/i18n.js`, `site/app.js`, `site/index.html`, and `site/worker.js`. Add its patch build to `tools/build_site_patch.py`. In the locale file, import `PATCH_VERSION` from `../version.mjs`.
-
-Generate the BPS patch locally from the clean USA ROM and the translated ROM. Put the patch in `site/`.
+The tool reports how many instructions match. The `--diff` flag shows the differences.
