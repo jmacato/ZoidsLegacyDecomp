@@ -72,24 +72,22 @@ def main():
     try:
         source = dialogue.read_rom(args.rom)
         choices = json.loads((ROOT / 'kerning-choices.json').read_text())
-        versions = {}
+        version = insert_vwf.release_version()
         patches = {}
-        for language, scenes, dialogue_file, version_file in (
-                ('en', 'scene-translation.json', 'dialogue-en.json', 'VERSION'),
-                ('es', 'scene-translation-es.json', 'dialogue-es.json', 'VERSION_ES')):
-            versions[language] = insert_vwf.release_version(ROOT / version_file)
+        for language, scenes, dialogue_file in (
+                ('en', 'scene-translation.json', 'dialogue-en.json'),
+                ('es', 'scene-translation-es.json', 'dialogue-es.json')):
             target = insert_vwf.build_rom(
                 source, dialogue.load_scenes(ROOT / scenes, args.rom), choices,
-                insert_vwf.load_translation(ROOT / dialogue_file, args.rom), versions[language])
+                insert_vwf.load_translation(ROOT / dialogue_file, args.rom))
             patches[language] = create_bps(source, target)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         parser.exit(1, f'Error: {error}\n')
     (SITE / 'patch.bps').write_bytes(patches['en'])
     (SITE / 'patch-es.bps').write_bytes(patches['es'])
     (SITE / 'version.mjs').write_text(
-        f"export const PATCH_VERSION_EN = '{versions['en']}';\n"
-        f"export const PATCH_VERSION_ES = '{versions['es']}';\n")
-    print(f'Wrote English v{versions["en"]} and Spanish v{versions["es"]} patches to {SITE}.')
+        f"export const PATCH_VERSION = '{version}';\n")
+    print(f'Wrote English and Spanish v{version} patches to {SITE}.')
 
 
 if __name__ == '__main__':

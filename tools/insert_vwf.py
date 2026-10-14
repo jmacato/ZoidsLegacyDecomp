@@ -608,7 +608,8 @@ def check_deck_command_names(rom, checker):
             raise ValueError(f'Deck Command must fit one 104-pixel line: {name}')
 
 
-def release_version(path=ROOT / 'VERSION'):
+def release_version():
+    path = ROOT / 'VERSION'
     version = path.read_text().strip()
     if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', version):
         raise ValueError(f'{path.name} must hold a version such as 1.0.2.')
@@ -626,8 +627,8 @@ def load_translation(path, rom_path):
     return document
 
 
-def build_rom(original, document, choices, dialogue_document, version=None):
-    version = version or release_version()
+def build_rom(original, document, choices, dialogue_document):
+    version = release_version()
     challenge_reward_prefixes = dialogue_document.get('challenge_reward_prefixes', False)
     title_labels = dialogue_document.get('title_menu')
     dialogue_document = {'entries': [
@@ -811,6 +812,7 @@ def build_rom(original, document, choices, dialogue_document, version=None):
         '<10H4x2I', 0x4640, 0x4629, 0xAA09, 0x4B04, 0x469E, 0x4B04, 0x4718, 0x4680,
         0x7802, 0xE016, CREDITS_RESUME, symbols['credits_line'] | 1)
     title_menu.patch(rom, title_labels)
+    title_menu.patch_version(rom, version)
     return bytes(rom)
 
 
@@ -821,16 +823,12 @@ def main():
     parser.add_argument('--kerning', type=Path, default=ROOT / 'kerning-choices.json')
     parser.add_argument('--dialogue', type=Path, default=ROOT / 'dialogue-en.json')
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--version-file', type=Path)
     args = parser.parse_args()
     try:
         document = dialogue.load_scenes(args.draft, args.rom)
         choices = json.loads(args.kerning.read_text())
         text_data = load_translation(args.dialogue, args.rom)
-        version_file = args.version_file or ROOT / (
-            'VERSION_ES' if args.dialogue.name == 'dialogue-es.json' else 'VERSION')
-        rom = build_rom(dialogue.read_rom(args.rom), document, choices, text_data,
-                        release_version(version_file))
+        rom = build_rom(dialogue.read_rom(args.rom), document, choices, text_data)
         args.output.write_bytes(rom)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         parser.exit(1, f'Error: {error}\n')

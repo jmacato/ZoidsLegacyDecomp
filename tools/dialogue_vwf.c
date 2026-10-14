@@ -2852,8 +2852,11 @@ __attribute__((noinline)) const u8 *vwf_menu_render(
     if (length && start_indexed_format(window, text, length))
         return text + length - 1;
     IndexedFormat *indexed = indexed_format(window);
-    if (indexed && indexed->magic == INDEXED_FORMAT_MAGIC)
+    if (indexed && indexed->magic == INDEXED_FORMAT_MAGIC) {
+        // Pulse's Emotion heading follows its numbers before the next refresh.
+        vwf_refresh();
         indexed->magic = 0;
+    }
     render_window_profile(window, text, 0, 0, TEXT_ALIGN_LEFT, 0);
     return length ? text + length - 1 : text;
 }
