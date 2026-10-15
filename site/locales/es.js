@@ -1,4 +1,4 @@
-import { PATCH_VERSION } from '../version.mjs';
+import { PATCH_VERSION } from '../version.mjs?v=20261016-extractor-2';
 
 export default {
   "about.retranslation": "Zoids™ Legacy: RE:TRANSLATION vuelve a contar el viaje de Zeru y Juno con un guion inglés basado en el original japonés. Los diálogos conservan el tono de los personajes del anime, y los menús y textos se leen mejor en la pantalla de Game Boy Advance™. La versión en español sigue en desarrollo.",
@@ -7,6 +7,7 @@ export default {
   "brand.edition": "RE:TRADUCCIÓN",
   "brand.homeAria": "Inicio de Zoids™ Legacy",
   "download.filename": "Zoids Legacy (USA) - Espanol (partial).gba",
+  "error.extractorPopup": "Permite abrir una pestaña nueva para extraer los recursos de tu ROM.",
   "error.fileCount": "Elige un archivo ROM a la vez.",
   "error.fileType": "Elige un archivo ROM .gba. Extrae antes los archivos ZIP.",
   "error.insecureContext": "Abre esta página mediante HTTPS o localhost en un navegador moderno para usar el parcheador.",
@@ -79,6 +80,7 @@ export default {
   "patch.complete": "Parche aplicado. La descarga está lista.",
   "patch.downloadAgain": "Descargar de nuevo",
   "patch.dropHint": "o arrastra aquí tu archivo .gba",
+  "patch.extractor": "Extraer recursos",
   "patch.initialStatus": `Parche v${PATCH_VERSION} · Elige tu ROM USA para comenzar.`,
   "patch.romAria": "Elige tu ROM USA de Zoids™ Legacy",
   "patch.selectRom": "Elegir ROM",

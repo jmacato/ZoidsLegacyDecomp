@@ -182,6 +182,7 @@ h2 { margin: 0; color: var(--amber); font: 700 14px/1.5 var(--font); letter-spac
 .patch-button:disabled .control-content { opacity: .6; }
 .patch-button[aria-busy="true"] { --control-border: var(--amber); --control-fill: var(--panel); color: var(--amber); cursor: wait; }
 .patch-button[aria-busy="true"] .control-surface, .patch-button[aria-busy="true"] .control-content { opacity: 1; }
+#extractor-button { height: calc(var(--patch-button-height, 62px) * 2 / 3); min-height: 0; padding-block: 0; }
 .message-panel { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 58px; padding-top: 22px; font: 14px/1.7 var(--font); }
 /* Match Xolonium's cap height; its capitals already sit centered in the line box. */
 .status-dot { --signal: var(--success); display: flex; gap: .2em; flex: 0 0 auto; height: .66em; height: 1cap; }

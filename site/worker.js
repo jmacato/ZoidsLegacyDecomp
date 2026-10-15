@@ -1,4 +1,4 @@
-import { applyBps } from './patcher.mjs';
+import { applyBps } from './patcher.mjs?v=20261016-extractor-2';
 
 const ROM_SIZE = 8 * 1024 * 1024;
 const ROM_SHA1 = '460fa2158606097f6e6f63ce966d2d6ecdd58d70';

@@ -18,10 +18,10 @@
       window.introFallback = setTimeout(() => document.documentElement.classList.remove('intro-pending'), 4000);
     }
   </script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="decal-layout.css">
+  <link rel="stylesheet" href="style.css?v=20261016-extractor-2">
+  <link rel="stylesheet" href="decal-layout.css?v=20261016-extractor-2">
   <!-- Edit text in locales/en.js and locales/es.js. HTML text is an English fallback. -->
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=20261016-extractor-2"></script>
 </head>
 <body>
   <a class="skip-link" href="#rom-input" data-i18n="skip.rom">Skip to ROM selection</a>
@@ -295,6 +295,12 @@
                 <span class="control-surface flicker-unit" aria-hidden="true"></span>
                 <span class="control-content">
                   <span id="button-label" class="control-label" data-i18n="patch.button">Patch &amp; download</span>
+                </span>
+              </button>
+              <button id="extractor-button" class="patch-button menu-control" type="button" disabled>
+                <span class="control-surface flicker-unit" aria-hidden="true"></span>
+                <span class="control-content">
+                  <span class="control-label" data-i18n="patch.extractor">Extract Assets</span>
                 </span>
               </button>
             </div>

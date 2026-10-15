@@ -1,4 +1,4 @@
-import { localizePage, text } from './i18n.js';
+import { localizePage, text } from './i18n.js?v=20261016-extractor-2';
 
 let effects;
 let language = 'en';
@@ -69,7 +69,14 @@ const zone = document.querySelector('#drop-zone');
 const status = document.querySelector('#status');
 const statusDots = document.querySelectorAll('.status-dot');
 const patchButton = document.querySelector('#patch-button');
+const extractorButton = document.querySelector('#extractor-button');
+if (window.ResizeObserver) {
+  new ResizeObserver(() => {
+    extractorButton.style.setProperty('--patch-button-height', `${patchButton.getBoundingClientRect().height}px`);
+  }).observe(patchButton);
+}
 const buttonLabel = document.querySelector('#button-label');
+const romTransfers = new Map();
 const WORKER_TIMEOUT_MS = 30_000;
 let rom = null;
 let worker = null;
@@ -112,6 +119,7 @@ function setBusy(value) {
   zone.classList.toggle('busy', value);
   for (const dot of statusDots) dot.dataset.busy = String(value);
   patchButton.disabled = value || !rom || !supported;
+  extractorButton.disabled = value || !rom || !supported;
   patchButton.setAttribute('aria-busy', String(value && Boolean(rom)));
 }
 function stopWorker() {
@@ -128,7 +136,7 @@ function failWorker(message) {
 function startWorker(action, file) {
   stopWorker();
   const selectedLanguage = language;
-  const task = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+  const task = new Worker(new URL('./worker.js?v=20261016-extractor-2', import.meta.url), { type: 'module' });
   worker = task;
   workerTimer = setTimeout(() => {
     failWorker('error.timeout');
@@ -176,6 +184,7 @@ function selectRom(files) {
   rom = null;
   zone.classList.remove('selected');
   patchButton.disabled = true;
+  extractorButton.disabled = true;
   setButton('patch.button');
   if (files.length !== 1) {
     setStatus('error.fileCount', 'error');
@@ -228,12 +237,37 @@ patchButton.addEventListener('click', () => {
     failWorker('error.worker');
   }
 });
+window.addEventListener('message', event => {
+  if (event.origin !== location.origin || event.data?.type !== 'zoids-extractor-ready') return;
+  const transfer = romTransfers.get(event.source);
+  if (!transfer) return;
+  clearTimeout(transfer.timer);
+  romTransfers.delete(event.source);
+  event.source.postMessage({ type: 'zoids-extractor-rom', file: transfer.file }, location.origin);
+});
+extractorButton.addEventListener('click', () => {
+  if (!rom || busy || !supported) return;
+  const url = new URL('./rom-tool.html', import.meta.url);
+  url.searchParams.set('v', Date.now().toString(36));
+  url.searchParams.set('from', 'patcher');
+  const page = window.open(url.href, '_blank');
+  if (!page) {
+    setStatus('error.extractorPopup', 'error');
+    return;
+  }
+  const timer = setTimeout(() => romTransfers.delete(page), 60000);
+  romTransfers.set(page, { file: rom, timer });
+});
+window.addEventListener('pagehide', () => {
+  for (const transfer of romTransfers.values()) clearTimeout(transfer.timer);
+  romTransfers.clear();
+});
 selectLanguage(language);
 if (!supported) {
   input.disabled = true;
   setStatus('error.insecureContext', 'error');
 }
-import('./effects.js').then(({ createEffects }) => {
+import('./effects.js?v=20261016-extractor-2').then(({ createEffects }) => {
   effects = createEffects();
 }).catch(() => {
   clearTimeout(window.introFallback);

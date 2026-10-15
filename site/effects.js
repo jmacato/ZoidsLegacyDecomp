@@ -1,5 +1,5 @@
-import { createAnalogPanels } from './crt.js';
-import { createHudMotion } from './hud-motion.js';
+import { createAnalogPanels } from './crt.js?v=20261016-extractor-2';
+import { createHudMotion } from './hud-motion.js?v=20261016-extractor-2';
 
 const FRAME_MS = 40;
 const motionAllowed = () => !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches &&
@@ -185,7 +185,7 @@ export function createEffects() {
       ], group[0].closest('.language-signal') ? 3 : 0));
     }
     reveal('#drop-zone', 1510, 490, true);
-    reveal('#patch-button', 1810, 410, true);
+    reveal('.patch-button', 1810, 410, true);
     reveal('.message-panel', 2160, 300, true);
     reveal('.actions .panel-markings', 2320, 240, true);
     reveal('.overview-frame, .project-overview .crt-texture', 2170, 550);
