@@ -1,0 +1,1 @@
+/* Included before every decomp file compiled for the battle simulator. */
