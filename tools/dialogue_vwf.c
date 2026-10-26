@@ -2706,25 +2706,79 @@ static __attribute__((always_inline)) inline int capture_row_format(
                                 text, column, row);
 }
 
+// A late redraw belongs to the field whose region covers its cells on that row.
+static __attribute__((noinline)) int covered_field_index(
+        const IndexedFormat *format, int left, int right, u32 row) {
+    const u8 *start = menu_format_start(format->address);
+    size_t length = bounded_length(start);
+    if (!length)
+        return -1;
+    const u8 *cursor = start + (start[0] == '~' || start[0] == '^');
+    const u8 *end = start + length - 1;
+    int line = -1, region_left = 0, region_right = 0;
+    int best = -1, best_overlap = 0;
+    while (cursor < end) {
+        u32 ordinal;
+        int kind;
+        size_t size;
+        const u8 *field = indexed_format_field(
+            cursor, (size_t)(end - cursor), &ordinal, &kind, &size);
+        const u8 *stop = field ? field : end;
+        for (const u8 *at = cursor; at < stop;) {
+            u8 value = *at;
+            if (value == 2 || value == 7 || value == 10) {
+                line = value == 7 ? at[2] : -1;
+                region_right = 0;
+            } else if (value == 8) {
+                region_left = at[1];
+                region_right = at[2];
+            }
+            at += value == 2 || value == 7 || value == 8 ? 3 :
+                  value == 1 || value == 4 || value == 6 ||
+                  (value >= 0x80 && value <= 0x9f) ? 2 : 1;
+        }
+        if (!field)
+            break;
+        int overlap = (right < region_right ? right : region_right) -
+                      (left > region_left ? left : region_left);
+        if (kind != 's' && line == (int)row && ordinal <= format->count &&
+                overlap > best_overlap) {
+            best = (int)ordinal - 1;
+            best_overlap = overlap;
+        }
+        cursor = field + size;
+    }
+    return best;
+}
+
 static __attribute__((noinline)) int capture_indexed_format(
                                   Window *window, int kind, int32_t number,
                                   u32 digits, u32 mode, u32 color,
-                                  const u8 *text) {
+                                  const u8 *text, u32 column, u32 row) {
     if (text == (const u8 *)0x081061C4)
         return 0;
     IndexedFormat *format = indexed_format(window);
     if (!format || format->magic != INDEXED_FORMAT_MAGIC ||
             (format->repeat & FORMAT_ROW))
         return 0;
-    if (format->next == format->count) {
-        if (!(format->repeat & FORMAT_REPEAT))
+    u32 index = format->next;
+    if (index == format->count) {
+        if (!(format->repeat & FORMAT_REPEAT)) {
+            int covered = kind == 'd' ? covered_field_index(format,
+                (int)((u8)column * 8),
+                (int)(((u8)column + digits + ((mode & 4) != 0)) * 8),
+                (u8)row) : -1;
+            if (covered < 0)
+                return 0;
+            index = (u32)covered;
+        } else if (format->repeat & FORMAT_DIRTY) {
             return 0;
-        if (format->repeat & FORMAT_DIRTY)
-            return 0;
-        format->next = 0;
-        format->string_bytes = 0;
+        } else {
+            index = format->next = 0;
+            format->string_bytes = 0;
+        }
     }
-    IndexedValue *value = &format->values[format->next];
+    IndexedValue *value = &format->values[index];
     u8 declared = value->digits & 0xc0;
     if ((declared == 0 && kind != 'd') ||
             (declared == 0x40 && kind != 's') ||
@@ -2733,7 +2787,7 @@ static __attribute__((noinline)) int capture_indexed_format(
     u8 flags = (u8)((mode & 15) | ((color & 7) << 4) |
                     (kind == 's' ? 0x80 : 0));
     if (value->digits != (declared | (u8)digits) || value->flags != flags)
-        format_changed(window, format->next);
+        format_changed(window, index);
     if (kind == 's') {
         size_t text_length = bounded_length(text);
         u32 end = window_tile_end(window);
@@ -2747,12 +2801,12 @@ static __attribute__((noinline)) int capture_indexed_format(
                 FORMAT_CACHE[window->slot].changed[0] ||
                 FORMAT_CACHE[window->slot].changed[1] || !(value->flags & 0x80) ||
                 value->value + text_length > limit) {
-            format_changed(window, format->next);
+            format_changed(window, index);
         } else {
             const u8 *prior = (const u8 *)window + value->value;
             for (size_t i = 0; i < text_length; ++i)
                 if (prior[i] != text[i]) {
-                    format_changed(window, format->next);
+                    format_changed(window, index);
                     break;
                 }
         }
@@ -2764,12 +2818,13 @@ static __attribute__((noinline)) int capture_indexed_format(
         format->string_bytes += text_length;
     } else {
         if (value->value != (u32)number)
-            format_changed(window, format->next);
+            format_changed(window, index);
         value->value = (u32)number;
     }
     value->digits = declared | (u8)digits;
     value->flags = flags;
-    ++format->next;
+    if (index == format->next)
+        ++format->next;
     if (format->next == format->count)
         format->repeat |= FORMAT_DIRTY | FORMAT_READY;
     if (window != (Window *)0x0200A8A0)
@@ -3000,7 +3055,8 @@ RUNTIME_O2 __attribute__((used)) void vwf_field_at_body(
     int captured = capture_row_format(
         window, 's', 0, 0, 0, color, text, column, row);
     if (!captured)
-        captured = capture_indexed_format(window, 's', 0, 0, 0, color, text);
+        captured = capture_indexed_format(window, 's', 0, 0, 0, color, text,
+                                          column, row);
     if (captured == 2)
         paint_indexed_format(slot);
     if (captured)
@@ -3535,7 +3591,8 @@ RUNTIME_O2 void vwf_field_current_body(const u8 *text, u32 color, u32 slot) {
     int captured = capture_row_format(window, 's', 0, 0, 0, color, text,
                                       window->column, window->row);
     if (!captured)
-        captured = capture_indexed_format(window, 's', 0, 0, 0, color, text);
+        captured = capture_indexed_format(window, 's', 0, 0, 0, color, text,
+                                          window->column, window->row);
     if (captured == 2)
         paint_indexed_format(slot);
     if (captured)
@@ -3712,14 +3769,15 @@ void vwf_format_number(int32_t value, u32 digits, u32 mode, u8 *destination) {
 }
 
 static __attribute__((noinline, used)) RUNTIME_O2 int vwf_number_at_try(
-        int32_t value, u32 digits, u32 color, u32 mode, u32 slot) {
-    Window *window = get_window((u8)slot);
+        int32_t value, u32 digits, u32 color, u32 mode,
+        const u32 *position) {
+    Window *window = get_window((u8)position[0]);
     IndexedFormat *format = indexed_format(window);
     if (format && format->magic == INDEXED_FORMAT_MAGIC &&
             (format->repeat & FORMAT_ROW))
         return 3;
     int captured = capture_indexed_format(
-        window, 'd', value, digits, mode, color, 0);
+        window, 'd', value, digits, mode, color, 0, position[1], position[2]);
     if (captured)
         return captured;
     return 0;
@@ -3762,7 +3820,7 @@ __attribute__((naked)) void vwf_number_at(
         u32 row __attribute__((unused))) {
     __asm__ volatile(
         "push {r0, r1, r2, r3, r4, r5, lr}\n"
-        "ldr r4, [sp, #28]\n"
+        "add r4, sp, #28\n"
         "push {r4}\n"
         "bl vwf_number_at_try\n"
         "add sp, #4\n"
@@ -3813,7 +3871,8 @@ RUNTIME_O2 void vwf_number_current(int32_t value, u32 digits, u32 color,
                                       window->column, window->row);
     if (!captured)
         captured = capture_indexed_format(
-            window, 'd', value, digits, mode, color, 0);
+            window, 'd', value, digits, mode, color, 0,
+            window->column, window->row);
     if (captured == 2)
         paint_indexed_format(slot);
     if (captured)
