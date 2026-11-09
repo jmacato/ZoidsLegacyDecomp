@@ -1,0 +1,13 @@
+{
+  "name": "battle-mechanics-page",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "11.9.0",
+    "katex": "0.16.11",
+    "marked": "12.0.2"
+  }
+}
