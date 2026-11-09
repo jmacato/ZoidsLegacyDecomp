@@ -1,6 +1,9 @@
 import { PATCH_VERSION } from '../version.mjs?v=20261016-extractor-2';
 
 export default {
+  "about.mechanicsAfter": "(en inglés).",
+  "about.mechanicsBefore": "Consulta las",
+  "about.mechanicsLink": "mecánicas de combate",
   "about.retranslation": "Zoids™ Legacy: RE:TRANSLATION vuelve a contar el viaje de Zeru y Juno con un guion inglés basado en el original japonés. Los diálogos conservan el tono de los personajes del anime, y los menús y textos se leen mejor en la pantalla de Game Boy Advance™. La versión en español sigue en desarrollo.",
   "about.story": "Un experimento con armas entremezcla distintas épocas del planeta Zi y reúne en un mismo mundo a Van, Bit, el príncipe Athle y Zan. El joven piloto Zeru y su compañera Juno deben descubrir qué pasó y cómo arreglarlo. Recluta a personajes conocidos, construye y personaliza tus Zoids™, y lucha para restaurar el mundo y devolver a sus guerreros a casa.",
   "about.title": "De vuelta en el planeta Zi",

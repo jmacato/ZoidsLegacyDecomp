@@ -119,16 +119,17 @@ nav { display: flex; flex-shrink: 0; align-items: center; gap: 28px; margin-left
 .small-control::after { inset: 2px; background: var(--background); clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); }
 .small-control:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
 .small-control .github-icon { fill: currentColor; stroke: none; }
-.intro-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 28px; margin-top: 44px; }
-.workflow { display: grid; min-width: 0; aspect-ratio: 1; }
+main { container-type: inline-size; }
+.intro-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(calc((100cqw - 28px) / 2), auto); align-items: stretch; gap: 28px; margin-top: 44px; }
+.workflow { display: grid; min-width: 0; }
 .hud-panel { position: relative; min-width: 0; padding: 14% 12% 18%; }
-.actions { display: flex; flex-direction: column; justify-content: center; padding: calc(13% + 31px) 9%; }
+.actions { display: flex; flex-direction: column; justify-content: center; padding: calc(20.2% + 20px) 7.81% calc(14.15% + 20px) 10.19%; }
 .patcher-title { position: absolute; top: 0; left: 6.2385%; width: 42.2018%; aspect-ratio: 230 / 28; display: grid; place-items: center; margin: 1.4679% 0 0; color: var(--background); font-size: clamp(12px, calc(1vw + 3px), 15px); letter-spacing: .6px; white-space: nowrap; }
 .patcher-title svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--amber); }
 .patcher-title span { position: relative; }
 .section-frame { position: absolute; inset: 0; width: 100%; height: 100%; fill: currentColor; color: var(--amber); pointer-events: none; }
 h2 { margin: 0; color: var(--amber); font: 700 14px/1.5 var(--font); letter-spacing: 1.5px; }
-.action-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.action-list { flex: 1 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 12px; }
 .language-picker { display: flex; flex-wrap: wrap; row-gap: 6px; }
 .language-option { --ink: var(--rail); --fill: var(--panel); --outer: polygon(44px 0, 100% 0, calc(100% - 44px) 100%, 0 100%); --inner: polygon(42.83px 0, calc(100% - 2.83px) 0, calc(100% - 42.83px) 100%, 2.83px 100%); position: relative; isolation: isolate; display: flex; flex: 1 0 auto; align-items: center; justify-content: center; height: 44px; margin-left: -36px; padding: 0 34px; border: 0; background: transparent; color: var(--text); font: 700 14px/1 var(--font); letter-spacing: 1px; cursor: pointer; pointer-events: none; }
 .language-option:is(:first-child, .row-start) { --outer: polygon(0 0, 100% 0, calc(100% - 44px) 100%, 0 100%); --inner: polygon(0 0, calc(100% - 2.83px) 0, calc(100% - 42.83px) 100%, 0 100%); margin-left: 0; padding-left: 14px; }
@@ -195,14 +196,14 @@ h2 { margin: 0; color: var(--amber); font: 700 14px/1.5 var(--font); letter-spac
 .status-dot.error { --signal: var(--error); }
 .status-dot[data-busy="true"] { --signal: var(--amber); }
 .status-dot[data-busy="true"] > span { animation-duration: 700ms; }
-#status { min-width: 0; margin: 0; color: var(--muted); font: inherit; text-align: center; }
+#status { min-width: 0; margin: 0; text-wrap: balance; color: var(--muted); font: inherit; text-align: center; }
 #status[data-error="true"] { color: var(--error); }
 .noscript { color: var(--error); font-size: 16px; padding: 15px 8px; }
 .project-section { margin-top: 36px; }
-.project-overview { position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0; aspect-ratio: 1; padding: calc(9% + 21px) 7%; }
-.project-overview > h2 { color: var(--text); font: 700 clamp(26px, calc(2vw + 3px), 30px)/1.25 var(--font); letter-spacing: -.5px; }
+.project-overview { position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: calc(9% + 21px) 8.3% calc(9% + 21px) 9.7%; }
+.project-overview > h2 { text-wrap: balance; color: var(--text); font: 700 clamp(26px, calc(2vw + 3px), 30px)/1.25 var(--font); letter-spacing: -.5px; }
 .project-intro { margin: 18px 0 0; color: var(--text); font: clamp(15px, calc(1vw + 3px), 16px)/1.85 var(--font); }
-.project-intro p { margin: 0; }
+.project-intro p { margin: 0; text-wrap: pretty; }
 .project-intro p + p { margin-top: 18px; }
 .project-features { display: flex; flex-direction: column; gap: 36px; }
 .feature { position: relative; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "screen info"; grid-template-rows: auto; align-items: center; align-content: center; gap: 24px 40px; min-height: 0; padding: calc(6.5% + 36px) 6%; }
@@ -253,10 +254,12 @@ footer p + p { margin-top: 8px; }
 @keyframes hatch-chase { 0%, 25%, 100% { opacity: .4; } 6%, 12% { opacity: 1; } }
 @keyframes signal-chase { 0%, 65%, 100% { opacity: .3; } 20%, 35% { opacity: 1; } }
 .motion-paused *, .motion-paused *::before, .motion-paused *::after { animation-play-state: paused !important; }
-@media (max-width: 1100px) {
-  .intro-panels { grid-template-columns: minmax(0, 1fr); max-width: 620px; margin-inline: auto; }
-  .workflow, .project-overview { aspect-ratio: auto; }
-  .project-overview { padding: calc(10% + 21px) 9%; }
+@media (max-width: 1240px) {
+  .intro-panels { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; max-width: 620px; margin-inline: auto; }
+}
+@media (min-width: 1241px) {
+  .project-overview > h2 { font-size: 30px; }
+  .project-intro { font-size: 16px; }
 }
 @media (min-width: 760.01px) and (max-width: 1100px) {
   .feature[data-frame="names"], .feature[data-frame="cast"] { padding-block: calc(10% + 40px); }
@@ -287,7 +290,7 @@ footer p + p { margin-top: 8px; }
   .small-control { font-size: 12px; }
   .intro-panels { max-width: 540px; gap: 26px; margin-top: 32px; }
   .hud-panel { width: 100%; max-width: 540px; padding: 15% 10% 18%; }
-  .actions { padding: calc(13% + 31px) 9%; }
+  .actions { padding: calc(20.2% + 20px) 7.81% calc(14.15% + 20px) 10.19%; }
   .patcher-title { font-size: clamp(11px, calc(2.3vw + 3px), 15px); letter-spacing: .4px; }
   .action-list { gap: 12px; }
   .menu-control { padding: 20px 12px; }
@@ -298,7 +301,7 @@ footer p + p { margin-top: 8px; }
   .patch-button .control-label { font-size: clamp(16px, calc(3.2vw + 3px), 21px); }
   .message-panel { gap: 8px; min-height: 46px; padding-top: 17px; font-size: 13px; }
   .project-section { width: 100%; max-width: 540px; margin: 26px auto 0; }
-  .project-overview { padding: calc(5.5% + 41px) 9%; }
+  .project-overview { padding: calc(5.5% + 41px) 8.3% calc(5.5% + 41px) 9.7%; }
   .project-intro { margin-top: 18px; font-size: 15px; }
   .project-features { gap: 26px; }
   .decal-control-strip { margin-top: 35%; width: 2.2%; }
@@ -322,6 +325,12 @@ footer p + p { margin-top: 8px; }
   .page-header nav { gap: 4px; }
   .small-control { width: clamp(36px, 11.25vw, 44px); min-height: 44px; justify-content: center; padding: 0; }
   .small-control span { display: none; }
+}
+@media (max-width: 560px) {
+  .actions .panel-markings svg:is(.decal-jettison, .decal-static-vent) { display: none; }
+}
+@media (max-width: 389px) {
+  .project-intro { font-size: 14px; }
 }
 @media (max-width: 360px) {
   .edition-label { --label-cut: 22px; }

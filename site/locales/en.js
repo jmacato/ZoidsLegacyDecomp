@@ -1,6 +1,9 @@
 import { PATCH_VERSION } from '../version.mjs?v=20261016-extractor-2';
 
 export default {
+  "about.mechanicsAfter": "page.",
+  "about.mechanicsBefore": "See how combat works on the",
+  "about.mechanicsLink": "battle mechanics",
   "about.retranslation": "Zoids™ Legacy: RE:TRANSLATION revisits Zeru and Juno’s journey with a fresh English script drawn from the Japanese original. Familiar anime voices guide the dialogue, while clearer menus and more readable text bring the adventure back to the Game Boy Advance™ screen.",
   "about.story": "A weapons experiment sends Planet Zi’s eras crashing together, drawing Van, Bit, Prince Athle and Zan into the same world. Now young pilot Zeru and his companion Juno must uncover what happened and find a way to put it right. Recruit familiar faces, build and customize your Zoids™, and battle to restore the world and bring its warriors home.",
   "about.title": "Welcome Back to Planet Zi.",

@@ -1,4 +1,4 @@
-import { localizePage, text } from './i18n.js?v=20261016-extractor-2';
+import { localizePage, text } from './i18n.js?v=20261110-mechanics-1';
 
 let effects;
 let language = 'en';

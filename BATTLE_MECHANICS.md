@@ -258,7 +258,7 @@ Level scales only HP, DCP, EP, GEP, SP, MM, and CP. DF, AM, and SR are not level
 
 $$scale = 100 + \left\lfloor \frac{L}{2} \right\rfloor$$
 
-$$X' = \left\lfloor \frac{X \cdot scale}{100} \right\rfloor \quad \text{for } X \in \{HP, DCP, EP, GEP, SP, MM, CP\}$$
+$$X' = \left\lfloor \frac{X \cdot scale}{100} \right\rfloor$$
 
 <!-- src
 GEP_{base} + a_{form} => src/zoids/load_zoid_base_stats.c:84
@@ -341,9 +341,11 @@ A level 40 Zoid therefore uses a scale of 120, a 20 percent increase over its ba
 
 ### Equipment weight penalty
 
-Let $w_i$ be the weight of the equipment in equipment slot $i$ and let $W = w_0 + w_1 + w_2 + w_3$. Equipment slots 0 through 3 are the ones counted for the Zoid's load. If $W > CP$:
+Let $w_i$ be the weight of the equipment in equipment slot $i$ and let $W = w_0 + w_1 + w_2 + w_3$. Equipment slots 0 through 3 are the ones counted for the Zoid's load. If $W > CP$ and $W - CP < CP$:
 
-$$SP' = \left\lfloor \frac{SP \cdot (2CP - W)}{CP} \right\rfloor, \quad MM' = \left\lfloor \frac{MM \cdot (2CP - W)}{CP} \right\rfloor \quad \text{if } W - CP < CP$$
+$$SP' = \left\lfloor \frac{SP \cdot (2CP - W)}{CP} \right\rfloor$$
+
+$$MM' = \left\lfloor \frac{MM \cdot (2CP - W)}{CP} \right\rfloor$$
 
 <!-- src
 \left\lfloor \frac{SP \cdot (2CP - W)}{CP} \right\rfloor => src/zoids/apply_equipment_weight_penalty.c:90-101
@@ -412,7 +414,7 @@ if (equipment_weight > load_capacity) {
 
 The pilot's effective level is the pilot level plus Zoid proficiency plus the Organoid level bonus:
 
-$$L_{eff} = \min\left(99,\; L_p + p + L_{org}\right), \quad p \in \{0, 5, 10, 20\}$$
+$$L_{eff} = \min\left(99,\; L_p + p + L_{org}\right)$$
 
 The proficiency term is +5, +10, or +20 when the pilot has the matching Zoid proficiency ability (1, 2, or 3) for that model. The pilot percentage bonuses apply to max HP, sensor accuracy, mobility, and DCP:
 
@@ -491,9 +493,9 @@ if (!(*(u16 *)((u8 *)output_stats + 2) & 1)) {
 }
 ```
 
-Power is capped at 9999 and hit rate is capped at the weapon's accuracy limit before other modifiers. Battle effects that add attack power or hit rate are applied next. The weapon takes the overload hit-rate factor, then the pilot modifiers:
+Power is capped at 9999 and hit rate is capped at the weapon's accuracy limit before other modifiers. Battle effects that add attack power or hit rate are applied next. The weapon takes the overload hit-rate factor, then the pilot modifiers. When $W > CP$:
 
-$$HR' = \left\lfloor \frac{HR \cdot (2CP - W)}{CP} \right\rfloor \quad \text{when } W > CP$$
+$$HR' = \left\lfloor \frac{HR \cdot (2CP - W)}{CP} \right\rfloor$$
 
 The pilot accuracy percent is the pilot's HR bonus plus signed ability deltas (ranged, melee, missile, laser, particle, ballistic bonuses and penalties), packed into a signed 16-bit value:
 
@@ -927,13 +929,13 @@ All probability rolls use the game's random helper, which returns an integer fro
 80005d0:  e12fff1e   bx  lr
 ```
 
-1. Hit roll: $roll_h = \left\lfloor \frac{rand \cdot 200}{2^{16}} \right\rfloor$, giving 0 to 99. The attack misses when $roll_h = 0$ or $roll_h > Hit$.
+1. Hit roll: $roll_h = \lfloor rand \cdot 200 / 2^{16} \rfloor$, giving 0 to 99. The attack misses when $roll_h = 0$ or $roll_h > Hit$.
 2. Shield check: if the target has an energy shield effect (kind 21) on the auxiliary pilot, has more than 1 EP, and $(rand \gg 14) = 0$ (one chance in two), the outcome is `SHIELD` instead of damage.
 3. Direct check: with the hit roll values from above, the attack is a direct hit when $2 \cdot roll_h \le DirectHit$; otherwise it is a normal hit.
 4. Freeze check: a surviving hit whose damage is at least the target's DCP rolls shutdown resistance.
 
 <!-- src
-\left\lfloor \frac{rand \cdot 200}{2^{16}} \right\rfloor => src/battle/roll_battle_action_outcomes.c:244-247
+\lfloor rand \cdot 200 / 2^{16} \rfloor => src/battle/roll_battle_action_outcomes.c:244-247
 roll_h = 0 => src/battle/roll_battle_action_outcomes.c:248-250
 roll_h > Hit => src/battle/roll_battle_action_outcomes.c:251-263
 (rand \gg 14) = 0 => src/battle/roll_battle_action_outcomes.c:264-284
@@ -1001,11 +1003,13 @@ The game shows four preview values before the roll: normal hit rate, normal dama
 
 ### Damage
 
-Base power is the weapon's attack power after all modifiers. Two situational changes apply before defense:
+Base power is the weapon's attack power after all modifiers. Two situational changes apply before defense. A melee weapon with the melee anti-air effect, against a flying target:
 
-$$P' = P + 20 \quad \text{for melee anti-air against a flying target}$$
+$$P' = P + 20$$
 
-$$P' = \left\lfloor \frac{P}{2} \right\rfloor \quad \text{for a non-water weapon in a water battle}$$
+A non-water weapon in a water battle:
+
+$$P' = \left\lfloor \frac{P}{2} \right\rfloor$$
 
 Defense is skipped entirely for a direct hit and for a weapon with the ignore-defense attribute. Otherwise defense starts from the target's DF and adds every defense effect whose weapon-type condition matches:
 
@@ -1298,7 +1302,7 @@ The final resistance is clamped to 99:
 
 $$R = \min(R_1, 99)$$
 
-A resistance roll $roll_s = \left\lfloor \frac{rand \cdot 100}{2^{15}} \right\rfloor$ from 0 to 99 is compared against $R$. The unit resists when $roll_s \le R$. So for $R \le 98$:
+A resistance roll $roll_s = \lfloor rand \cdot 100 / 2^{15} \rfloor$ from 0 to 99 is compared against $R$. The unit resists when $roll_s \le R$. So for $R \le 98$:
 
 $$P(\text{shutdown}) \approx \frac{99 - R}{100}$$
 
@@ -1362,7 +1366,7 @@ The ROM compares the 16-bit resistance value as unsigned. If $DCP - D$ is negati
 0 \le R_0 \le 95 => rom:0x080BE506-0x080BE508
 R_0 + \left\lfloor \frac{3(100 - R_0)}{4} \right\rfloor => src/battle/roll_battle_status_resistance.c:40-46
 \min(R_1, 99) => src/battle/roll_battle_status_resistance.c:47-49
-\left\lfloor \frac{rand \cdot 100}{2^{15}} \right\rfloor => src/battle/roll_battle_status_resistance.c:50
+\lfloor rand \cdot 100 / 2^{15} \rfloor => src/battle/roll_battle_status_resistance.c:50
 -->
 
 ```thumb 0x080BE506-0x080BE54A,0x080BE554-0x080BE560

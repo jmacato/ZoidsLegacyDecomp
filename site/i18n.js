@@ -1,5 +1,5 @@
-import en from './locales/en.js?v=20261016-extractor-2';
-import es from './locales/es.js?v=20261016-extractor-2';
+import en from './locales/en.js?v=20261110-mechanics-1';
+import es from './locales/es.js?v=20261110-mechanics-1';
 
 const languages = { en, es };
 const attributes = ['aria-label', 'alt', 'content', 'src', 'title'];

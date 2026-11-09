@@ -149,7 +149,7 @@ md = md.replace(fence, () => {
     const gutter = r.n === null || e.kind !== 'c' ? '' : `<span class="ln" aria-hidden="true">${r.n}</span>`;
     return `<span class="row${r.n === null ? ' gap' : ''}"${r.n === null ? '' : ` data-n="${r.n}"`}>${e.kind === 'c' ? gutter || '<span class="ln"></span>' : ''}<span class="tx">${lines[i] || ' '}</span></span>`;
   }).join('');
-  code.push(`<details class="source-details" id="${e.id}"><summary>${esc(label)}</summary>${link}<pre><code class="${e.kind === 'c' ? 'lang-c' : 'lang-asm'}">${body}</code></pre></details>`);
+  code.push(`<details class="source-details" id="${e.id}"><summary>${esc(label).replace(/([/_])/g, '$1<wbr>')}</summary>${link}<pre><code class="${e.kind === 'c' ? 'lang-c' : 'lang-asm'}">${body}</code></pre></details>`);
   return `@@C${code.length - 1}@@`;
 });
 
@@ -171,6 +171,7 @@ const stash = (tex, display) => {
     const r = markers.get(color);
     return `<mstyle class="src-ref" tabindex="0" role="button" aria-controls="${r.owner}" aria-expanded="false" title="Show ${esc(r.label)}" data-target="${r.owner}" data-lines="${r.keys.join(' ')}">`;
   });
+  m = m.replace(/ mathcolor="#a[0-9a-f]{5}"/g, '');
   m = m.replace(/<annotation encoding="application\/x-tex">[\s\S]*?<\/annotation>/, () => `<annotation encoding="application/x-tex">${esc(stripMarkers(tex.trim()))}</annotation>`);
   math.push(display ? `<div class="math">${m}</div>` : m);
   return `@@M${math.length - 1}@@`;
@@ -257,22 +258,25 @@ main { display: grid; grid-template-columns: 160px minmax(0, 760px); gap: 24px; 
 .sections a:hover { text-decoration: none; color: var(--text); background: var(--raised); }
 .sections a.active { border-left-color: var(--amber); color: var(--amber-bright); background: var(--panel); }
 article { min-width: 0; }
-article > h2:first-of-type { margin-top: 0; }
 .section-select { display: none; width: 100%; height: 36px; font-size: 12px; margin-bottom: 16px; }
 .table-wrap { width: 100%; overflow-x: auto; margin-bottom: 20px; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
-th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table { width: auto; min-width: min(100%, 480px); border-collapse: collapse; font-size: 12px; text-align: left; }
+th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
 th { font-weight: 500; color: var(--muted); }
 math { font-size: 1.1em; }
 .math { margin: 14px 0 18px; overflow-x: auto; overflow-y: hidden; }
-.src-ref { color: var(--teal-bright); cursor: pointer; text-decoration: underline; text-decoration-color: var(--teal); text-underline-offset: 3px; }
+.math.more-right { mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); }
+.math.more-left { mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent); }
+.math.more-left.more-right { mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
+.src-ref { color: var(--teal-bright); cursor: pointer; border-bottom: 1px solid var(--teal); }
 .src-ref:hover { color: var(--amber-bright); }
-.src-ref:focus-visible { outline-offset: 2px; }
+.src-ref:focus { outline: none; }
+.src-ref:focus-visible { outline: none; background: #3b2b18; color: var(--amber-bright); border-bottom-color: var(--amber); }
 .source-details { padding: 16px 0; border-top: 1px solid var(--line); }
-.source-details summary { font-size: 12px; cursor: pointer; color: var(--muted); }
+.source-details summary { font-size: 12px; cursor: pointer; color: var(--muted); overflow-wrap: break-word; }
 .source-details[open] summary { margin-bottom: 10px; }
 .source-link { display: inline-block; margin-bottom: 10px; font-size: 12px; text-decoration: underline; }
-pre { position: relative; margin: 0; padding: 16px 0; background: var(--background); border: 1px solid var(--line); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; line-height: 1.6; white-space: pre; overflow: auto; max-height: 400px; }
+pre { position: relative; margin: 0; padding: 16px 0; background: var(--background); border: 1px solid var(--line); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; line-height: 18px; white-space: pre; overflow: auto; max-height: 400px; }
 pre code { font-size: inherit; display: inline-block; min-width: 100%; }
 .row { display: block; padding: 0 16px 0 0; border-left: 2px solid transparent; }
 .lang-asm .row { padding-left: 16px; }
@@ -332,8 +336,14 @@ const mark = () => {
 };
 addEventListener('scroll', mark, { passive: true });
 mark();
+const edges = el => {
+  el.classList.toggle('more-left', el.scrollLeft > 1);
+  el.classList.toggle('more-right', el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+};
+document.querySelectorAll('.math').forEach(el => el.addEventListener('scroll', () => edges(el), { passive: true }));
 const scrollable = () => document.querySelectorAll('.math, .table-wrap, pre').forEach(el => {
   if (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1) el.setAttribute('tabindex', '0'); else el.removeAttribute('tabindex');
+  if (el.classList.contains('math')) edges(el);
 });
 addEventListener('resize', scrollable);
 document.addEventListener('toggle', scrollable, true);
@@ -358,8 +368,12 @@ const show = (ref, viaKeyboard) => {
   const link = details.querySelector('.source-link');
   if (link) link.href = link.dataset.base + '#L' + rows[0].dataset.n + (rows.length > 1 ? '-L' + rows.at(-1).dataset.n : '');
   const pre = details.querySelector('pre');
-  details.scrollIntoView({ block: 'nearest' });
-  pre.scrollTop = rows[0].offsetTop - pre.clientHeight / 3;
+  const target = rows[0].offsetTop - pre.clientHeight / 3;
+  const all = [...pre.querySelectorAll('.row')];
+  let top = 0;
+  for (const r of all) { if (r.offsetTop <= target) top = r.offsetTop; else break; }
+  pre.scrollTop = top <= all[0].offsetTop ? 0 : top;
+  window.scrollTo({ top: scrollY + rows[0].getBoundingClientRect().top - innerHeight / 2 });
   if (viaKeyboard) { if (!pre.hasAttribute('tabindex')) pre.setAttribute('tabindex', '-1'); pre.focus({ preventScroll: true }); }
 };
 document.addEventListener('click', e => { const ref = e.target.closest('.src-ref'); if (ref) show(ref, false); });
